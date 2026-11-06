@@ -1,6 +1,8 @@
 # Changelog
 
 ## v0.5 — 2026-11-06
+- Fix: impor backup bisa langsung dari beranda kosong ("Sudah punya backup? Impor file .json") dan dari layar intro ("Sudah punya backup? Pulihkan data").
+- Header di HP layar sempit: label status sinkron disembunyikan supaya ikon gear (Lainnya) tidak terdorong keluar layar.
 - Logo STOP RIBA (bunga dicoret) sebagai ikon Add to Home Screen di iPhone & Android, favicon, dan manifest dengan nama "STOP RIBA".
 
 ## v0.4 — 2026-11-06
