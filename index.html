@@ -135,6 +135,8 @@ function ensureSettings(){var s=state.settings=state.settings||{};if(s.gaji==nul
 ensureSettings();
 var ui={tab:'home',q:'',lType:'Semua',lStatus:null,lSort:'due',lOpen:{},dayOpen:null,calYM:todayISO().slice(0,7),selDay:null,strat:'ava',detail:null,form:null,sheet:null};
 var sync='local';
+/* QA seed: hanya diisi di build prototype Claude (window.STOPRIBA_SEED), tidak pernah di repo */
+function applySeed(){var S=window.STOPRIBA_SEED;if(!S||!Array.isArray(S.debts)||state.seedId===S.id)return false;state.debts=clone(S.debts);state.seedId=S.id;ensureSettings();state.settings.onboarded=true;state.updatedAt=Date.now();saveLocal();return true;}
 function loadLocal(){try{var r=localStorage.getItem(LS_KEY);if(r){var s=JSON.parse(r);if(s&&Array.isArray(s.debts))state=s;}}catch(e){}ensureSettings();}
 function saveLocal(){try{localStorage.setItem(LS_KEY,JSON.stringify(state));}catch(e){}}
 var docRef=null,saving=false,pendingSave=false,saveTimer=null;
@@ -152,7 +154,7 @@ function initCloud(){
       var timer=setTimeout(function(){setSync('offline');},10000);
       return ref.get().then(function(snap){
         clearTimeout(timer);docRef=ref;
-        if(snap.exists){var body=snap.data();if(body&&body.state&&(body.updatedAt||0)>=(state.updatedAt||0)){state=clone(body.state);ensureSettings();if(state.settings.onboarded)ui.onb=null;saveLocal();render();setSync('cloud');}else{setSync('cloud');scheduleCloud();}}
+        if(snap.exists){var body=snap.data();if(body&&body.state&&(body.updatedAt||0)>=(state.updatedAt||0)){state=clone(body.state);ensureSettings();var seeded=applySeed();if(state.settings.onboarded)ui.onb=null;saveLocal();render();setSync('cloud');if(seeded)scheduleCloud();}else{setSync('cloud');scheduleCloud();}}
         else{setSync('cloud');if(state.debts.length)scheduleCloud();}
       },function(){clearTimeout(timer);setSync('local');});
     });
@@ -543,7 +545,7 @@ document.addEventListener('input',function(e){var el=e.target;if(el.id==='lq'){u
 });
 document.addEventListener('change',function(e){var el=e.target;if(el.dataset&&el.dataset.s){var k=el.dataset.s,v=num(el.value);if(k==='batas')v=Math.max(1,Math.min(100,v||30));if(k==='capShort'||k==='capLong'){v=dec(el.value);if(!(v>0&&v<10)){el.value=String(state.settings[k]).replace('.',',');return;}}if(state.settings[k]!==v){state.settings[k]=v;commit('Pengaturan disimpan');}}});
 
-loadLocal();if(!state.settings.onboarded)ui.onb=1;render();initCloud();
+loadLocal();applySeed();if(!state.settings.onboarded)ui.onb=1;render();initCloud();
 })();
 </script>
 </body>
