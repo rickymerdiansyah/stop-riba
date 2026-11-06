@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#101215">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="STOP RIBA">
+<title>STOP RIBA — Jurnal Hutang</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#101215;--card:#1A1D22;--line:#2A2E35;--tx:#F3F1EC;--mu:#A3A9B1;--acc:#E5372B;--ok:#2BB3A3;--warn:#F2A33A;--in:#0C0E10}
+*{box-sizing:border-box}
+html,body{margin:0;background:var(--bg);color:var(--tx);font-family:Inter,system-ui,sans-serif;-webkit-tap-highlight-color:transparent}
+button{font:inherit;color:inherit}
+.app{max-width:480px;margin:0 auto;padding:calc(env(safe-area-inset-top) + 12px) 16px calc(110px + env(safe-area-inset-bottom))}
+.h{font-family:'Space Grotesk',sans-serif}
+.card{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:16px}
+.mu{color:var(--mu)}
+.row{display:flex;align-items:center;gap:10px}
+.between{justify-content:space-between}
+.col{display:flex;flex-direction:column}
+.stack{display:flex;flex-direction:column;gap:12px}
+.bar{height:8px;border-radius:4px;background:var(--line);overflow:hidden}
+.bar>i{display:block;height:100%;background:var(--ok);border-radius:4px}
+.btn{min-height:48px;border-radius:14px;border:0;font-weight:700;font-size:15px;padding:0 16px;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;gap:8px;text-decoration:none}
+.btn-p{background:var(--acc);color:#fff}
+.btn-w{background:#fff;color:#101215}
+.btn-g{background:var(--card);border:1px solid var(--line);color:var(--tx)}
+.btn-d{background:transparent;border:1px solid #6B2A25;color:#FF8E84}
+.btn-icon{width:44px;height:44px;border-radius:22px;border:1px solid var(--line);background:var(--card);display:inline-flex;align-items:center;justify-content:center;cursor:pointer;flex:none}
+.chip{font-size:12px;font-weight:700;padding:5px 10px;border-radius:999px;white-space:nowrap}
+.pill{font-size:11px;font-weight:600;padding:5px 10px;border-radius:999px;border:1px solid var(--line);display:inline-flex;align-items:center;gap:6px;color:var(--mu)}
+.nav{position:fixed;left:0;right:0;bottom:0;background:#16191D;border-top:1px solid var(--line);padding-bottom:env(safe-area-inset-bottom);z-index:20}
+.nav-in{max-width:480px;margin:0 auto;height:68px;display:grid;grid-template-columns:repeat(5,1fr);align-items:center}
+.nav button{background:none;border:0;display:flex;flex-direction:column;align-items:center;gap:3px;font-size:11px;color:var(--mu);min-height:56px;cursor:pointer}
+.nav button.on{color:var(--tx);font-weight:600}
+.nav .fab{justify-self:center;width:54px;height:54px;min-height:54px;border-radius:27px;background:var(--acc);color:#fff}
+.full{position:fixed;inset:0;background:var(--bg);z-index:30;overflow:auto;-webkit-overflow-scrolling:touch}
+.sheet-bg{position:fixed;inset:0;background:rgba(0,0,0,.62);z-index:40;display:flex;align-items:flex-end;justify-content:center}
+.sheet{background:#15181C;width:100%;max-width:480px;max-height:92vh;overflow:auto;border-radius:22px 22px 0 0;padding:16px 16px calc(24px + env(safe-area-inset-bottom));border-top:1px solid var(--line)}
+input,textarea{font:inherit;font-size:16px;color:var(--tx);background:var(--in);border:1px solid var(--line);border-radius:12px;min-height:48px;padding:0 12px;width:100%;color-scheme:dark}
+textarea{padding:12px;min-height:130px;font-size:13px;font-family:ui-monospace,Menlo,monospace}
+input:focus,textarea:focus,button:focus-visible{outline:2px solid #fff;outline-offset:1px}
+label.f{display:flex;flex-direction:column;gap:6px;font-size:13px;font-weight:600}
+.err{color:#FF8E84;font-size:13px;font-weight:600}
+.toast{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(86px + env(safe-area-inset-bottom));background:#F3F1EC;color:#101215;border-radius:14px;padding:8px 8px 8px 16px;display:flex;gap:12px;align-items:center;z-index:60;font-size:14px;font-weight:600;max-width:92vw;box-shadow:0 8px 24px rgba(0,0,0,.4)}
+.toast button{background:#101215;color:#fff;border:0;border-radius:10px;min-height:40px;padding:0 12px;font-weight:700;cursor:pointer}
+.grid3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+.grid2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.cal{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:4px}
+.day{height:46px;border-radius:10px;border:0;background:transparent;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;font-size:14px;cursor:pointer;color:var(--tx);padding:0}
+.dot{width:6px;height:6px;border-radius:3px;display:inline-block}
+.seg{display:grid;grid-template-columns:1fr 1fr;gap:4px;background:var(--in);padding:4px;border-radius:14px}
+.seg button{min-height:42px;border:0;border-radius:11px;background:transparent;color:var(--mu);font-weight:600;font-size:13px;cursor:pointer}
+.seg button.on{background:var(--card);color:var(--tx)}
+.typechip{min-height:44px;padding:0 14px;border-radius:22px;border:1px solid var(--line);background:var(--card);font-weight:600;font-size:14px;cursor:pointer;color:var(--tx)}
+.typechip.on{background:#fff;color:#101215;border-color:#fff}
+.list-btn{width:100%;text-align:left;background:var(--card);border:1px solid var(--line);border-radius:16px;padding:14px 16px;cursor:pointer;color:var(--tx);display:block}
+.sec{font-family:'Space Grotesk',sans-serif;font-size:18px;font-weight:700;margin:10px 0 0}
+.stepper{display:flex;align-items:center;justify-content:space-between;border:1px solid var(--line);border-radius:12px;background:var(--in);min-height:48px}
+.stepper button{width:48px;height:46px;border:0;background:none;font-size:22px;cursor:pointer;color:var(--tx);flex:none}
+.stepper input{border:0;text-align:center;background:none;min-height:44px;padding:0;width:100%;min-width:0}
+.ck{width:44px;height:44px;border:0;background:none;display:flex;align-items:center;justify-content:center;cursor:pointer;flex:none;padding:0}
+.ck span{width:26px;height:26px;border-radius:8px;display:flex;align-items:center;justify-content:center;border:2px solid #5C626B}
+.ck.on span{background:var(--ok);border-color:var(--ok);color:#06231F}
+.irow{display:flex;align-items:center;gap:6px;border-bottom:1px solid var(--line);min-height:60px}
+.irow:last-child{border-bottom:0}
+.irow .body{flex:1;display:flex;align-items:center;justify-content:space-between;gap:8px;background:none;border:0;text-align:left;cursor:pointer;min-height:58px;padding:0 6px 0 0;color:var(--tx)}
+.sched{font-size:13px;display:flex;justify-content:space-between;padding:7px 0;border-top:1px solid var(--line)}
+.legend{display:flex;align-items:center;gap:6px;font-size:12px;color:var(--mu)}
+.sw{width:10px;height:10px;border-radius:2px;display:inline-block}
+.small{font-size:12px}
+.b{font-weight:700}
+.empty{text-align:center;padding:48px 12px;display:flex;flex-direction:column;gap:14px;align-items:center}
+</style>
+</head>
+<body>
+<div id="app"></div>
+<div id="ov"></div>
+<div id="toast"></div>
+<script>
+(function(){
+'use strict';
+/* ---------- helpers ---------- */
+var DEFAULT_TYPES=[{name:'Kartu kredit',color:'#E8E4DC',mode:'bulanan',ojk:false},{name:'Pinjol',color:'#FF5A4E',mode:'harian',ojk:true},{name:'Paylater',color:'#F2A33A',mode:'bulanan',ojk:true},{name:'KTA',color:'#4C8DF6',mode:'bulanan',ojk:false}];
+var SWATCH=['#E8E4DC','#FF5A4E','#F2A33A','#4C8DF6','#2BB3A3','#A68BF2','#F472B6','#84CC16'];
+function types(){return state.settings.types;}
+function typeOf(n){var t=types();for(var k=0;k<t.length;k++)if(t[k].name===n)return t[k];return {name:n,color:'#A68BF2',mode:'bulanan',ojk:false};}
+function tcol(n){return typeOf(n).color;}
+var BLN=['Jan','Feb','Mar','Apr','Mei','Jun','Jul','Agu','Sep','Okt','Nov','Des'];
+var BULAN=['Januari','Februari','Maret','April','Mei','Juni','Juli','Agustus','September','Oktober','November','Desember'];
+var HARI=['Min','Sen','Sel','Rab','Kam','Jum','Sab'];
+var LS_KEY='stopriba.v1';
+function pad(n){return String(n).padStart(2,'0');}
+function toISO(d){return d.getFullYear()+'-'+pad(d.getMonth()+1)+'-'+pad(d.getDate());}
+function todayISO(){return toISO(new Date());}
+function parseISO(s){var a=String(s).split('-').map(Number);return new Date(a[0],a[1]-1,a[2]);}
+function dim(y,m){return new Date(y,m+1,0).getDate();}
+function addMonths(iso,k){var a=iso.split('-').map(Number);var t=new Date(a[0],a[1]-1+k,1);return toISO(new Date(t.getFullYear(),t.getMonth(),Math.min(a[2],dim(t.getFullYear(),t.getMonth()))));}
+function addDays(iso,k){var d=parseISO(iso);d.setDate(d.getDate()+k);return toISO(d);}
+function daysBetween(a,b){return Math.round((parseISO(b)-parseISO(a))/86400000);}
+function dec(s){var v=parseFloat(String(s==null?'':s).replace(',','.'));return isNaN(v)?0:v;}
+function pct2(n){return (Math.round(n*1000)/1000).toString().replace('.',',')+'%';}
+function daysUntil(iso){return Math.round((parseISO(iso)-parseISO(todayISO()))/86400000);}
+function fmtD(iso){var d=parseISO(iso);return d.getDate()+' '+BLN[d.getMonth()]+' '+d.getFullYear();}
+function fmtDW(iso){var d=parseISO(iso);return HARI[d.getDay()]+', '+d.getDate()+' '+BLN[d.getMonth()]+' '+d.getFullYear();}
+function rp(n){return 'Rp '+Math.round(n||0).toLocaleString('id-ID');}
+function shortRp(n){n=Math.round(n||0);if(n>=1e9)return (n/1e9).toFixed(2).replace('.',',')+' M';if(n>=1e6)return (n/1e6).toFixed(2).replace('.',',')+' jt';if(n>=1e3)return Math.round(n/1e3)+' rb';return String(n);}
+function num(s){return Number(String(s==null?'':s).replace(/[^\d]/g,''))||0;}
+function fmtNum(n){return n?Number(n).toLocaleString('id-ID'):'';}
+function pct(n){return (Math.round(n*10)/10).toString().replace('.',',')+'%';}
+function esc(s){return String(s==null?'':s).replace(/[&<>"']/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c];});}
+function newId(){return Math.random().toString(36).slice(2,9)+Date.now().toString(36);}
+function clone(o){return JSON.parse(JSON.stringify(o));}
+var IC={home:'<path d="M3 10.5 12 3l9 7.5V21H3z"/>',cal:'<rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/>',chart:'<path d="M3 20h18M6 16l4-5 4 3 5-7"/>',more:'<circle cx="5" cy="12" r="1.4"/><circle cx="12" cy="12" r="1.4"/><circle cx="19" cy="12" r="1.4"/>',plus:'<path d="M12 5v14M5 12h14"/>',check:'<path d="M20 6 9 17l-5-5"/>',back:'<path d="m15 18-6-6 6-6"/>',next:'<path d="m9 18 6-6-6-6"/>',edit:'<path d="M12 20h9M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4z"/>',trash:'<path d="M3 6h18M8 6V4h8v2M6 6l1 14h10l1-14"/>',alert:'<path d="M12 9v4M12 17h.01"/><path d="M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0z"/>',x:'<path d="M18 6 6 18M6 6l12 12"/>',cloud:'<path d="M17.5 19H9a7 7 0 1 1 6.7-9h1.8a4.5 4.5 0 1 1 0 9z"/>',phone:'<rect x="6" y="2" width="12" height="20" rx="2"/><path d="M11 18h2"/>',zap:'<path d="M13 2 3 14h9l-1 8 10-12h-9z"/>'};
+function ic(k,s,w){s=s||20;w=w||2;return '<svg width="'+s+'" height="'+s+'" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="'+w+'" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">'+IC[k]+'</svg>';}
+var LOGO='<svg width="28" height="28" viewBox="0 0 30 30" aria-hidden="true"><polygon points="9,1 21,1 29,9 29,21 21,29 9,29 1,21 1,9" fill="#E5372B"/><rect x="8" y="13.5" width="14" height="3" rx="1.5" fill="#fff"/></svg>';
+
+/* ---------- state & storage ---------- */
+var state={debts:[],settings:{},updatedAt:0};
+function ensureSettings(){var s=state.settings=state.settings||{};if(s.gaji==null)s.gaji=0;if(!s.batas)s.batas=30;if(s.capShort==null)s.capShort=0.3;if(s.capLong==null)s.capLong=0.2;if(!Array.isArray(s.types)||!s.types.length)s.types=clone(DEFAULT_TYPES);
+  (state.debts||[]).forEach(function(d){if(!d.mode)d.mode='bulanan';if(d.admin==null)d.admin=0;if(!d.cair)d.cair=d.mode==='harian'?addDays(d.firstDue,-30):addMonths(d.firstDue,-1);if(!s.types.some(function(t){return t.name===d.type;}))s.types.push({name:d.type,color:'#A68BF2',mode:'bulanan',ojk:false});});}
+ensureSettings();
+var ui={tab:'home',calYM:todayISO().slice(0,7),selDay:null,strat:'ava',detail:null,form:null,sheet:null};
+var sync='local';
+function loadLocal(){try{var r=localStorage.getItem(LS_KEY);if(r){var s=JSON.parse(r);if(s&&Array.isArray(s.debts))state=s;}}catch(e){}ensureSettings();}
+function saveLocal(){try{localStorage.setItem(LS_KEY,JSON.stringify(state));}catch(e){}}
+var docRef=null,saving=false,pendingSave=false,saveTimer=null;
+function setSync(s){sync=s;var el=document.getElementById('syncpill');if(el)el.outerHTML=syncPill();}
+function scheduleCloud(){if(!docRef)return;clearTimeout(saveTimer);saveTimer=setTimeout(flush,700);}
+function flush(){if(!docRef)return;if(saving){pendingSave=true;return;}saving=true;setSync('saving');
+  docRef.set({v:1,updatedAt:state.updatedAt,state:clone(state)}).then(function(){setSync('cloud');},function(e){if(e&&e.code==='invalid_argument'){docRef=null;setSync('local');}else setSync('error');}).then(function(){saving=false;if(pendingSave){pendingSave=false;flush();}});}
+function initCloud(){
+  if(!window.claude||typeof window.claude.use!=='function'){setSync('local');return;}
+  Promise.all([window.claude.use('db'),window.claude.use('user')]).then(function(r){
+    var db=r[0],user=r[1];if(!db||!user){setSync('local');return;}
+    return user.id().then(function(id){
+      if(!id){setSync('local');return;}
+      var ref=db.doc('data/users/'+id+'/stopriba');
+      var timer=setTimeout(function(){setSync('offline');},10000);
+      return ref.get().then(function(snap){
+        clearTimeout(timer);docRef=ref;
+        if(snap.exists){var body=snap.data();if(body&&body.state&&(body.updatedAt||0)>=(state.updatedAt||0)){state=clone(body.state);ensureSettings();saveLocal();render();setSync('cloud');}else{setSync('cloud');scheduleCloud();}}
+        else{setSync('cloud');if(state.debts.length)scheduleCloud();}
+      },function(){clearTimeout(timer);setSync('local');});
+    });
+  }).catch(function(){setSync('local');});
+}
+var undoSnap=null;
+function commit(msg,undo){if(undo)undoSnap=undo;state.updatedAt=Date.now();saveLocal();scheduleCloud();render();if(msg)toast(msg,!!undo);}
+
+/* ---------- domain ---------- */
+/* spec: {kembali,tenor,mode:'bulanan'|'harian',firstDue,cair,hari} */
+function modeLbl(m){return m==='harian'?'Per hari':m==='manual'?'Manual':'Tiap bulan';}
+function dueDates(sp){if(sp.mode==='manual')return sp.rows.map(function(r){return r.due;});var a=[];for(var i=0;i<sp.tenor;i++)a.push(sp.mode==='harian'?addDays(sp.cair,Math.round((i+1)*sp.hari/sp.tenor)):addMonths(sp.firstDue,i));return a;}
+function buildInst(sp,prev,paidCount){if(sp.mode==='manual'){return sp.rows.map(function(r,i){var amt=r.pokok+r.bunga,p=prev&&prev[i];var o={n:i+1,due:r.due,amount:amt,pokok:r.pokok,bunga:r.bunga,paidAt:null,paidAmount:0};if(p&&p.paidAt){o.paidAt=p.paidAt;o.paidAmount=p.paidAmount;}else if(paidCount&&i<paidCount){o.paidAt=r.due;o.paidAmount=amt;}return o;});}var kembali=sp.kembali,tenor=sp.tenor,dd=dueDates(sp);var per=Math.floor(kembali/tenor),out=[];for(var i=0;i<tenor;i++){var amount=i===tenor-1?kembali-per*(tenor-1):per;var due=dd[i];var p=prev&&prev[i];var o={n:i+1,due:due,amount:amount,paidAt:null,paidAmount:0};if(p&&p.paidAt){o.paidAt=p.paidAt;o.paidAmount=p.paidAmount;}else if(paidCount&&i<paidCount){o.paidAt=due;o.paidAmount=amount;}out.push(o);}return out;}
+/* Rates. pinjaman = pokok di kontrak; admin = potongan di awal; dana diterima = pinjaman - admin.
+   Flat (cara OJK / brosur): total biaya / pokok / jumlah hari.
+   Efektif (bunga riil): IRR harian dari arus kas (terima dana di tanggal cair, bayar tiap tenor), dikonversi ke per bulan. */
+function calcRates(o){var P=o.pinjaman||0,adm=o.admin||0,recv=P-adm,flows=o.flows||[],tot=0;flows.forEach(function(f){tot+=f.amt;});
+  var biaya=Math.max(0,tot-P+adm),lastDue=flows.length?flows[flows.length-1].due:o.cair,days=Math.max(1,o.cair&&lastDue?daysBetween(o.cair,lastDue):30*(o.tenor||1));
+  var r={biaya:biaya,days:days,pctPokok:P?biaya/P*100:0,flatHari:0,flatBulan:0,effBulan:0,effTahun:0,cap:null,over:false};
+  if(!P||!recv||recv<=0||!flows.length)return r;
+  r.flatHari=biaya/P/days*100;
+  r.flatBulan=o.mode!=='bulanan'?r.flatHari*30:biaya/P/(o.tenor||1)*100;
+  var t=flows.map(function(f){return Math.max(1,daysBetween(o.cair,f.due));});
+  function npv(x){var s=-recv;for(var k=0;k<flows.length;k++)s+=flows[k].amt/Math.pow(1+x,t[k]);return s;}
+  if(npv(0)>0){var lo=0,hi=0.05;for(var it=0;it<80;it++){var mid=(lo+hi)/2;if(npv(mid)>0)lo=mid;else hi=mid;}var rd=(lo+hi)/2;r.effBulan=(Math.pow(1+rd,365/12)-1)*100;r.effTahun=r.effBulan*12;}
+  if(o.ojk){r.cap=days<=180?state.settings.capShort:state.settings.capLong;r.over=r.flatHari>r.cap+1e-9;}
+  return r;}
+function debtRates(d){return calcRates({pinjaman:d.pinjaman,admin:d.admin,cair:d.cair,mode:d.mode,tenor:d.inst.length,ojk:typeOf(d.type).ojk,flows:d.inst.map(function(i){return {due:i.due,amt:i.amount};})});}
+function stats(d){var total=0,paid=0,sisa=0,cnt=0,paidBase=0,extra=0,next=null,last=null;d.inst.forEach(function(i){total+=i.amount;if(i.paidAt){paid+=i.paidAmount;cnt++;paidBase+=i.amount;extra+=Math.max(0,i.paidAmount-i.amount);}else{sisa+=i.amount;if(!next)next=i;last=i;}});var sisaPokok=null;if(d.mode==='manual'){sisaPokok=0;d.inst.forEach(function(i){if(!i.paidAt)sisaPokok+=(i.pokok!=null?i.pokok:i.amount);});}var R=debtRates(d),bunga=R.biaya;return {sisaPokok:sisaPokok,total:total,paid:paid,sisa:sisa,cnt:cnt,n:d.inst.length,bunga:bunga,bungaPaid:total?bunga*paidBase/total:0,rate:R.effBulan,R:R,next:next,last:last,done:!next,pctPaid:total?paidBase/total*100:0,extra:extra};}
+function ratesHTML(R,isHarian){
+  var cap='';if(R.cap!=null)cap='<div class="row" style="gap:8px;align-items:flex-start;padding:10px 12px;border-radius:12px;background:'+(R.over?'#3A1512':'rgba(43,179,163,.12)')+';color:'+(R.over?'#FFC2BC':'#9BE7DD')+';font-size:12px;line-height:1.45">'+ic(R.over?'alert':'check',16)+'<span>'+(R.over?'<b>Melebihi batas OJK</b> '+pct2(R.cap)+'/hari untuk tenor '+(R.days<=180?'≤':'>')+' 6 bulan. Cek legalitas pemberi pinjaman di OJK sebelum bayar lebih jauh.':'Masih di bawah batas OJK '+pct2(R.cap)+'/hari (tenor '+(R.days<=180?'≤':'>')+' 6 bulan).')+'</span></div>';
+  return '<div class="grid2" style="gap:10px 12px;font-size:12px"><span class="col" style="gap:2px"><span class="mu">Flat per hari</span><span class="b" style="font-size:14px">'+pct2(R.flatHari)+'</span></span><span class="col" style="gap:2px"><span class="mu">Flat per bulan'+(isHarian?' (×30 hari)':'')+'</span><span class="b" style="font-size:14px">'+pct(R.flatBulan)+'</span></span><span class="col" style="gap:2px"><span class="mu">Efektif per bulan</span><span class="b" style="font-size:14px;color:#FF7A6F">'+pct(R.effBulan)+'</span></span><span class="col" style="gap:2px"><span class="mu">Efektif per tahun</span><span class="b" style="font-size:14px;color:#FF7A6F">'+pct(R.effTahun)+'</span></span></div>'+cap;}
+function summary(){var s={total:0,paid:0,sisa:0,cnt:0,n:0,bunga:0,bungaPaid:0,extra:0,last:null,overdue:[]};state.debts.forEach(function(d){var st=stats(d);s.total+=st.total;s.paid+=st.paid;s.sisa+=st.sisa;s.cnt+=st.cnt;s.n+=st.n;s.bunga+=st.bunga;s.bungaPaid+=st.bungaPaid;s.extra+=st.extra;if(st.last&&(!s.last||st.last.due>s.last.due))s.last={i:st.last,d:d};d.inst.forEach(function(i){if(!i.paidAt&&daysUntil(i.due)<0)s.overdue.push({d:d,i:i});});});var paidBase=s.total-s.sisa;s.pct=s.total?paidBase/s.total*100:0;return s;}
+function unpaidSorted(){var a=[];state.debts.forEach(function(d){d.inst.forEach(function(i){if(!i.paidAt)a.push({d:d,i:i});});});a.sort(function(x,y){return x.i.due<y.i.due?-1:x.i.due>y.i.due?1:0;});return a;}
+function findDebt(id){for(var k=0;k<state.debts.length;k++)if(state.debts[k].id===id)return state.debts[k];return null;}
+function instStatus(i){if(i.paidAt)return {t:'Lunas',bg:'rgba(43,179,163,.18)',fg:'#6EDBCD'};var du=daysUntil(i.due);if(du<0)return {t:'Telat '+(-du)+' hari',bg:'#E5372B',fg:'#fff'};if(du===0)return {t:'Hari ini',bg:'#E5372B',fg:'#fff'};if(du<=3)return {t:du+' hari lagi',bg:'#F2A33A',fg:'#101215'};return {t:du+' hari lagi',bg:'#262A30',fg:'#C9CDD3'};}
+function chip(s){return '<span class="chip" style="background:'+s.bg+';color:'+s.fg+'">'+s.t+'</span>';}
+/* ---------- views ---------- */
+function syncPill(){var m={cloud:['Tersinkron','#6EDBCD','cloud'],saving:['Menyimpan…','#C9CDD3','cloud'],local:['Di perangkat ini','#C9CDD3','phone'],offline:['Belum tersambung','#F2A33A','cloud'],error:['Gagal sinkron','#FF8E84','alert']}[sync];return '<span class="pill" id="syncpill" style="color:'+m[1]+'">'+ic(m[2],13)+m[0]+'</span>';}
+function header(title){return '<div class="row between" style="margin-bottom:14px"><div class="row">'+LOGO+'<span class="h b" style="font-size:20px;letter-spacing:.04em">'+(title||'STOP RIBA')+'</span></div>'+syncPill()+'</div>';}
+function emptyState(){return '<div class="empty card"><svg width="64" height="64" viewBox="0 0 30 30" aria-hidden="true"><polygon points="9,1 21,1 29,9 29,21 21,29 9,29 1,21 1,9" fill="#E5372B"/><rect x="8" y="13.5" width="14" height="3" rx="1.5" fill="#fff"/></svg><span class="h b" style="font-size:22px">Belum ada hutang tercatat</span><span class="mu" style="font-size:14px;line-height:1.5">Catat hutang pertama lo. Jadwal bisa dibuat otomatis (tiap bulan / per hari) atau diisi manual per cicilan sesuai aplikasi pinjolnya.</span><button class="btn btn-p" data-act="openAdd" style="width:100%">'+ic('plus',18,2.5)+'Tambah hutang</button></div>';}
+function vHome(){
+  var h=header();if(!state.debts.length)return h+emptyState();
+  var S=summary(),all=unpaidSorted(),nx=all[0];
+  if(S.overdue.length){var amt=S.overdue.reduce(function(a,x){return a+x.i.amount;},0);h+='<button class="list-btn" data-act="tab" data-v="cal" style="background:#3A1512;border-color:#6B231D;margin-bottom:12px"><span class="row"><span style="color:#FF8E84">'+ic('alert')+'</span><span class="col" style="flex:1;gap:2px"><b>'+S.overdue.length+' tagihan telat bayar</b><span style="font-size:13px;color:#FFC2BC">Total '+rp(amt)+' · lihat di kalender</span></span>'+ic('next',18)+'</span></button>';}
+  h+='<div class="card stack" style="border-radius:20px;padding:20px"><span class="mu" style="font-size:13px">Sisa outstanding</span><span class="h b" style="font-size:36px;line-height:1">'+rp(S.sisa)+'</span><span class="mu" style="font-size:13px">dari total kewajiban '+rp(S.total)+'</span><div class="bar" style="height:10px"><i style="width:'+S.pct.toFixed(1)+'%"></i></div><div class="row between" style="font-size:13px"><span class="b" style="color:var(--ok)">'+pct(S.pct)+' sudah lunas</span><span class="mu">'+rp(S.paid)+' terbayar</span></div></div>';
+  var lastLbl=S.last?BLN[parseISO(S.last.i.due).getMonth()]+' '+String(parseISO(S.last.i.due).getFullYear()).slice(2):'Lunas';
+  h+='<div class="grid3" style="margin-top:12px"><div class="card col" style="gap:6px;padding:14px 12px"><span class="mu small">Tenor lunas</span><span class="h b" style="font-size:22px">'+S.cnt+'<span class="mu" style="font-size:14px">/'+S.n+'</span></span></div><div class="card col" style="gap:6px;padding:14px 12px"><span class="mu small">Total bunga</span><span class="h b" style="font-size:22px;color:#FF7A6F">'+shortRp(S.bunga)+'</span></div><div class="card col" style="gap:6px;padding:14px 12px"><span class="mu small">Bebas hutang</span><span class="h b" style="font-size:22px">'+lastLbl+'</span></div></div>';
+  if(nx){var st=instStatus(nx.i);h+='<div style="background:var(--acc);border-radius:20px;padding:18px;margin-top:12px;color:#fff" class="stack"><div class="row between"><span style="font-size:12px;font-weight:700;letter-spacing:.08em">'+(daysUntil(nx.i.due)<0?'TELAT BAYAR':'JATUH TEMPO TERDEKAT')+'</span><span class="chip" style="background:rgba(0,0,0,.28);color:#fff">'+st.t+'</span></div><div class="row between" style="align-items:flex-end"><div class="col" style="gap:4px"><span style="font-size:17px;font-weight:700">'+esc(nx.d.name)+'</span><span style="font-size:13px">Tenor '+nx.i.n+' dari '+nx.d.inst.length+' · '+fmtDW(nx.i.due)+'</span></div><span class="h b" style="font-size:21px;white-space:nowrap">'+rp(nx.i.amount)+'</span></div><div class="grid2"><button class="btn btn-w" data-act="quickPay" data-id="'+nx.d.id+'" data-n="'+nx.i.n+'">'+ic('check',18,2.5)+'Sudah bayar</button><button class="btn" style="background:rgba(0,0,0,.25);color:#fff" data-act="openInst" data-id="'+nx.d.id+'" data-n="'+nx.i.n+'">Ubah nominal</button></div></div>';}
+  var act=state.debts.filter(function(d){return !stats(d).done;}),done=state.debts.filter(function(d){return stats(d).done;});
+  act.sort(function(a,b){return stats(a).next.due<stats(b).next.due?-1:1;});
+  h+='<div class="row between" style="margin-top:18px"><span class="sec" style="margin:0">Daftar hutang</span><span class="mu small">'+act.length+' aktif</span></div><div class="stack" style="margin-top:10px">'+act.map(debtCard).join('')+'</div>';
+  if(done.length)h+='<div class="sec">Sudah lunas</div><div class="stack" style="margin-top:10px">'+done.map(debtCard).join('')+'</div>';
+  return h;
+}
+function debtCard(d){var st=stats(d);var sub=st.done?'Lunas semua':'Berikutnya '+fmtD(st.next.due);return '<button class="list-btn" data-act="openDebt" data-id="'+d.id+'"><span class="col" style="gap:10px"><span class="row between" style="align-items:flex-start"><span class="col" style="gap:4px;min-width:0"><span class="b" style="font-size:15px">'+esc(d.name)+'</span><span class="mu small"><span class="sw" style="background:'+tcol(d.type)+';margin-right:6px"></span>'+esc(d.type)+' · '+sub+'</span></span><span class="col" style="gap:4px;align-items:flex-end"><span class="b" style="font-size:15px;white-space:nowrap">'+(st.done?'Lunas':rp(st.sisa))+'</span><span class="mu small">'+(st.done?'':'sisa')+'</span></span></span><span class="bar" style="height:6px;display:block"><i style="width:'+st.pctPaid.toFixed(1)+'%"></i></span><span class="row between mu small"><span>'+st.cnt+'/'+st.n+' tenor lunas</span><span>'+(st.R.over?'<b style="color:#FF7A6F">Di atas batas OJK</b>':'bunga '+rp(st.bunga))+'</span></span></span></button>';}
+
+function vCal(){
+  var h=header('Kalender');
+  var ym=ui.calYM.split('-').map(Number),y=ym[0],m=ym[1]-1;
+  var items=[];state.debts.forEach(function(d){d.inst.forEach(function(i){var di=parseISO(i.due);if(di.getFullYear()===y&&di.getMonth()===m)items.push({d:d,i:i});});});
+  items.sort(function(a,b){return a.i.due<b.i.due?-1:1;});
+  var tot=0,open=0;items.forEach(function(x){tot+=x.i.amount;if(!x.i.paidAt)open+=x.i.amount;});
+  h+='<div class="grid2"><div class="card col" style="gap:6px;padding:14px"><span class="mu small">Tagihan '+BULAN[m]+'</span><span class="h b" style="font-size:20px">'+rp(tot)+'</span></div><div class="card col" style="gap:6px;padding:14px"><span class="mu small">Belum dibayar</span><span class="h b" style="font-size:20px;color:#FF7A6F">'+rp(open)+'</span></div></div>';
+  var byDay={};items.forEach(function(x){var dd=parseISO(x.i.due).getDate();(byDay[dd]=byDay[dd]||[]).push(x);});
+  var first=new Date(y,m,1).getDay(),lead=(first+6)%7,n=dim(y,m),tISO=todayISO(),cells='';
+  for(var k=0;k<lead;k++)cells+='<span></span>';
+  for(var dd=1;dd<=n;dd++){var iso=y+'-'+pad(m+1)+'-'+pad(dd),list=byDay[dd]||[],dots='',hasOpen=false,hasLate=false;list.forEach(function(x){if(!x.i.paidAt){hasOpen=true;if(daysUntil(x.i.due)<0)hasLate=true;}});
+    list.slice(0,3).forEach(function(x){dots+='<span class="dot" style="background:'+(x.i.paidAt?'var(--ok)':'var(--acc)')+'"></span>';});
+    var st='';if(hasOpen)st+='background:'+(hasLate?'#4A1612':'#2A1715')+';font-weight:700;';if(iso===tISO)st+='box-shadow:inset 0 0 0 2px #F3F1EC;font-weight:700;';if(ui.selDay===dd)st+='background:#F3F1EC;color:#101215;';if(iso<tISO&&!list.length)st+='color:#6E747C;';
+    cells+='<button class="day" data-act="selDay" data-v="'+dd+'" style="'+st+'" aria-label="'+dd+' '+BULAN[m]+(list.length?', '+list.length+' tagihan':'')+'"><span>'+dd+'</span><span class="row" style="gap:2px;height:6px">'+dots+'</span></button>';}
+  h+='<div class="card stack" style="margin-top:12px;border-radius:20px"><div class="row between"><button class="btn-icon" data-act="calMove" data-v="-1" aria-label="Bulan sebelumnya">'+ic('back',18)+'</button><span class="h b" style="font-size:18px">'+BULAN[m]+' '+y+'</span><button class="btn-icon" data-act="calMove" data-v="1" aria-label="Bulan berikutnya">'+ic('next',18)+'</button></div><div class="cal mu" style="font-size:11px;font-weight:600;text-align:center"><span>Sen</span><span>Sel</span><span>Rab</span><span>Kam</span><span>Jum</span><span>Sab</span><span>Min</span></div><div class="cal">'+cells+'</div><div class="row" style="gap:14px;flex-wrap:wrap"><span class="legend"><span class="dot" style="background:var(--acc)"></span>Belum bayar</span><span class="legend"><span class="dot" style="background:var(--ok)"></span>Lunas</span><span class="legend"><span class="sw" style="box-shadow:inset 0 0 0 2px #F3F1EC;border-radius:3px"></span>Hari ini</span></div></div>';
+  var shown=ui.selDay?(byDay[ui.selDay]||[]):items;
+  h+='<div class="row between" style="margin-top:18px"><span class="sec" style="margin:0">'+(ui.selDay?ui.selDay+' '+BULAN[m]:'Jadwal bulan ini')+'</span>'+(ui.selDay?'<button class="btn btn-g" style="min-height:36px;font-size:13px" data-act="selDay" data-v="'+ui.selDay+'">Semua</button>':'')+'</div><div class="stack" style="margin-top:10px">';
+  if(!shown.length)h+='<div class="card mu" style="text-align:center;font-size:14px">Tidak ada tagihan'+(ui.selDay?' di tanggal ini':' bulan ini')+'.</div>';
+  shown.forEach(function(x){var dt=parseISO(x.i.due);h+='<button class="list-btn" data-act="openInst" data-id="'+x.d.id+'" data-n="'+x.i.n+'"><span class="row" style="gap:14px"><span class="col" style="width:48px;height:52px;border-radius:12px;background:var(--in);align-items:center;justify-content:center;flex:none"><span class="h b" style="font-size:20px;line-height:1">'+dt.getDate()+'</span><span class="mu" style="font-size:11px">'+BLN[dt.getMonth()]+'</span></span><span class="col" style="flex:1;gap:4px;min-width:0"><span class="b" style="font-size:15px">'+esc(x.d.name)+'</span><span class="mu small">Tenor '+x.i.n+'/'+x.d.inst.length+' · '+rp(x.i.paidAt?x.i.paidAmount:x.i.amount)+'</span></span>'+chip(instStatus(x.i))+'</span></button>';});
+  return h+'</div>';
+}
+
+function vStrat(){
+  var h=header('Strategi');if(!state.debts.length)return h+emptyState();
+  var S=summary(),act=state.debts.filter(function(d){return !stats(d).done;});
+  var hero='';
+  if(S.last){var du=daysUntil(S.last.i.due);hero='<span class="mu" style="font-size:13px">Menuju bebas riba</span><span class="h b" style="font-size:40px;line-height:1">'+(du>0?du+' hari lagi':(du===0?'Hari ini':'Lewat '+(-du)+' hari'))+'</span><span class="mu" style="font-size:13px">Tenor terakhir: '+esc(S.last.d.name)+', '+fmtD(S.last.i.due)+'</span>';}
+  else hero='<span class="h b" style="font-size:34px;line-height:1.1">Semua hutang lunas</span><span class="mu" style="font-size:13px">Pertahankan. Jangan ambil hutang baru.</span>';
+  h+='<div class="card stack" style="border-radius:20px;padding:20px">'+hero+'<div class="grid2"><div class="col" style="gap:4px;background:var(--in);border-radius:14px;padding:12px"><span class="mu small">Bunga sudah dibayar</span><span class="b" style="font-size:16px">'+rp(S.bungaPaid)+'</span></div><div class="col" style="gap:4px;background:var(--in);border-radius:14px;padding:12px"><span class="mu small">Sisa bunga</span><span class="b" style="font-size:16px;color:#FF7A6F">'+rp(S.bunga-S.bungaPaid)+'</span></div></div>'+(S.extra?'<span class="small" style="color:#F2C27A">Denda / biaya tambahan tercatat: '+rp(S.extra)+'</span>':'')+'</div>';
+  // projection
+  var now=new Date(),bars=[],maxV=S.sisa||1;
+  for(var k=0;k<24;k++){var end=toISO(new Date(now.getFullYear(),now.getMonth()+k+1,0)),v=0;state.debts.forEach(function(d){d.inst.forEach(function(i){if(!i.paidAt&&i.due>end)v+=i.amount;});});var mm=new Date(now.getFullYear(),now.getMonth()+k,1);bars.push({v:v,l:BLN[mm.getMonth()]});if(v===0)break;}
+  if(S.sisa>0){h+='<div class="sec">Proyeksi sisa outstanding</div><div class="card" style="margin-top:10px"><div class="mu small" style="margin-bottom:10px">Sisa di akhir tiap bulan kalau bayar sesuai jadwal</div><div style="display:flex;align-items:flex-end;gap:4px;height:120px">'+bars.map(function(b){return '<div class="col" style="flex:1;align-items:center;gap:4px;height:100%;justify-content:flex-end" title="'+b.l+': '+rp(b.v)+'"><div style="width:100%;max-width:22px;height:'+Math.max(2,b.v/maxV*96)+'px;background:'+(b.v?'#4C8DF6':'var(--ok)')+';border-radius:4px 4px 0 0"></div><span class="mu" style="font-size:10px">'+b.l+'</span></div>';}).join('')+'</div></div>';}
+  // composition
+  if(S.sisa>0){var byT={};act.forEach(function(d){byT[d.type]=(byT[d.type]||0)+stats(d).sisa;});var keys=Object.keys(byT).sort(function(a,b){return byT[b]-byT[a];});
+    h+='<div class="sec">Komposisi sisa hutang</div><div class="card stack" style="margin-top:10px"><div style="display:flex;height:14px;border-radius:7px;overflow:hidden;gap:2px">'+keys.map(function(k){return '<div style="width:'+(byT[k]/S.sisa*100)+'%;background:'+tcol(k)+'"></div>';}).join('')+'</div><div class="grid2" style="gap:6px 12px">'+keys.map(function(k){return '<span class="legend"><span class="sw" style="background:'+tcol(k)+'"></span>'+esc(k)+' '+Math.round(byT[k]/S.sisa*100)+'% · '+shortRp(byT[k])+'</span>';}).join('')+'</div></div>';}
+  // order
+  if(act.length){var ava=ui.strat==='ava';var list=act.map(function(d){return {d:d,s:stats(d)};}).sort(function(a,b){return ava?b.s.rate-a.s.rate:a.s.sisa-b.s.sisa;});
+    h+='<div class="sec">Urutan pelunasan</div><div class="stack" style="margin-top:10px"><div class="seg"><button class="'+(ava?'on':'')+'" data-act="strat" data-v="ava" aria-pressed="'+ava+'">Bunga tertinggi dulu</button><button class="'+(!ava?'on':'')+'" data-act="strat" data-v="snow" aria-pressed="'+!ava+'">Sisa terkecil dulu</button></div><span class="mu" style="font-size:13px;line-height:1.5">'+(ava?'Dana lebih dipakai ke hutang dengan bunga efektif per bulan tertinggi (sudah termasuk potongan admin dan jarak cicilan harian). Paling hemat bunga, kalau bisa dilunasi lebih awal.':'Dana lebih dipakai ke hutang dengan sisa terkecil. Cepat dapat satu hutang lunas, bagus buat motivasi.')+'</span>'+list.map(function(x,ix){return '<button class="list-btn" data-act="openDebt" data-id="'+x.d.id+'"><span class="row" style="gap:12px"><span style="width:32px;height:32px;border-radius:16px;background:#F3F1EC;color:#101215;font-weight:700;display:flex;align-items:center;justify-content:center;flex:none">'+(ix+1)+'</span><span class="col" style="flex:1;gap:2px;min-width:0"><span class="b" style="font-size:15px">'+esc(x.d.name)+'</span><span class="mu small">Sisa '+rp(x.s.sisa)+'</span></span><span class="col" style="align-items:flex-end;gap:2px"><span class="b">'+pct(x.s.rate)+'</span><span class="mu" style="font-size:11px">efektif/bln</span></span></span></button>';}).join('')+'</div>';}
+  // ratio
+  var mStart=toISO(new Date(now.getFullYear(),now.getMonth(),1)),mEnd=toISO(new Date(now.getFullYear(),now.getMonth()+1,0)),cic=0;state.debts.forEach(function(d){d.inst.forEach(function(i){if(i.due>=mStart&&i.due<=mEnd)cic+=i.amount;});});
+  var g=state.settings.gaji||0,b=state.settings.batas||30;
+  h+='<div class="sec">Rasio cicilan vs penghasilan</div><div class="card stack" style="margin-top:10px">';
+  if(!g)h+='<span class="mu" style="font-size:14px;line-height:1.5">Cicilan '+BULAN[now.getMonth()]+': <b style="color:var(--tx)">'+rp(cic)+'</b>. Isi penghasilan bulanan untuk lihat rasionya.</span><button class="btn btn-g" data-act="tab" data-v="more">Isi penghasilan</button>';
+  else{var r=cic/g*100,over=r>b;h+='<div class="row between"><span class="h b" style="font-size:30px;color:'+(over?'#FF7A6F':'var(--tx)')+'">'+pct(r)+'</span><span class="chip" style="background:'+(over?'#E5372B':'rgba(43,179,163,.18)')+';color:'+(over?'#fff':'#6EDBCD')+'">'+(over?'Di atas batas '+b+'%':'Aman (batas '+b+'%)')+'</span></div><div style="position:relative;height:10px;border-radius:5px;background:var(--line)"><div style="height:100%;width:'+Math.min(100,r)+'%;background:'+(over?'var(--acc)':'var(--ok)')+';border-radius:5px"></div><div style="position:absolute;top:-4px;bottom:-4px;left:'+Math.min(100,b)+'%;width:2px;background:#F3F1EC"></div></div><span class="mu small">Cicilan '+BULAN[now.getMonth()]+' '+rp(cic)+' dari penghasilan '+rp(g)+'</span>';}
+  return h+'</div>';
+}
+
+function vMore(){
+  var h=header('Lainnya');var pays=[];state.debts.forEach(function(d){d.inst.forEach(function(i){if(i.paidAt)pays.push({d:d,i:i});});});pays.sort(function(a,b){return a.i.paidAt>b.i.paidAt?-1:a.i.paidAt<b.i.paidAt?1:b.i.n-a.i.n;});
+  h+='<div class="sec" style="margin-top:0">Pengaturan</div><div class="card stack" style="margin-top:10px"><label class="f">Penghasilan bulanan<input data-s="gaji" data-money inputmode="numeric" placeholder="Rp" value="'+fmtNum(state.settings.gaji)+'"></label><label class="f">Batas aman rasio cicilan (%)<input data-s="batas" inputmode="numeric" value="'+(state.settings.batas||30)+'"></label><span class="mu small">Dipakai di tab Strategi untuk peringatan rasio cicilan.</span></div>';
+  h+='<div class="sec">Jenis hutang</div><div class="card" style="margin-top:10px;padding:4px 16px">'+types().map(function(t){var used=state.debts.filter(function(d){return d.type===t.name;}).length;return '<div class="irow" style="justify-content:space-between"><span class="row" style="gap:10px"><span class="sw" style="background:'+t.color+';width:14px;height:14px;border-radius:7px"></span><span class="col" style="gap:2px"><span class="b" style="font-size:14px">'+esc(t.name)+'</span><span class="mu small">'+modeLbl(t.mode)+(t.ojk?' · cek batas OJK':'')+' · '+used+' hutang</span></span></span>'+(used?'':'<button class="btn-icon" data-act="askDelType" data-v="'+esc(t.name)+'" aria-label="Hapus jenis '+esc(t.name)+'">'+ic('trash',16)+'</button>')+'</div>';}).join('')+'</div><button class="btn btn-g" style="width:100%;margin-top:10px" data-act="openNewType">'+ic('plus',18)+'Tambah jenis hutang</button>';
+  h+='<div class="sec">Batas bunga pinjol (OJK)</div><div class="card stack" style="margin-top:10px"><div class="grid2"><label class="f">Tenor ≤ 6 bulan (%/hari)<input data-s="capShort" inputmode="decimal" value="'+String(state.settings.capShort).replace('.',',')+'"></label><label class="f">Tenor > 6 bulan (%/hari)<input data-s="capLong" inputmode="decimal" value="'+String(state.settings.capLong).replace('.',',')+'"></label></div><span class="mu small" style="line-height:1.5">Default 0,3% dan 0,2% per hari untuk pinjol konsumtif, sesuai ketentuan OJK yang berlaku sejak 2025. Dihitung dari total bunga + biaya ÷ pokok ÷ jumlah hari. Ubah kalau OJK merevisi.</span></div>';
+  h+='<div class="sec">Riwayat pembayaran</div><div class="card" style="margin-top:10px;padding:4px 16px">'+(pays.length?pays.slice(0,40).map(function(x){var ex=x.i.paidAmount-x.i.amount;return '<button class="irow" data-act="openInst" data-id="'+x.d.id+'" data-n="'+x.i.n+'" style="width:100%;background:none;border-left:0;border-right:0;border-top:0;cursor:pointer;justify-content:space-between;text-align:left;color:var(--tx);padding:0"><span class="col" style="gap:2px"><span class="b" style="font-size:14px">'+esc(x.d.name)+' · tenor '+x.i.n+'</span><span class="mu small">Dibayar '+fmtD(x.i.paidAt)+(ex>0?' · termasuk denda '+rp(ex):'')+'</span></span><span class="b" style="font-size:14px">'+rp(x.i.paidAmount)+'</span></button>';}).join(''):'<div class="mu" style="padding:14px 0;font-size:14px">Belum ada pembayaran.</div>')+'</div>';
+  h+='<div class="sec">Data</div><div class="stack" style="margin-top:10px"><div class="card mu" style="font-size:13px;line-height:1.5">'+(sync==='cloud'||sync==='saving'?'Data tersimpan di akun Claude lo (privat, cuma lo yang bisa baca) dan ikut ke HP/laptop lain yang buka link ini.':'Data saat ini cuma tersimpan di browser perangkat ini. Rutin export backup.')+'</div><div class="grid2"><button class="btn btn-g" data-act="export" data-v="json">Backup (JSON)</button><button class="btn btn-g" data-act="export" data-v="csv">Export CSV</button></div><button class="btn btn-g" data-act="openImport">Pulihkan dari backup</button>'+'<button class="btn btn-d" data-act="askReset">'+ic('trash',18)+'Hapus semua data</button></div>';
+  return h;
+}
+
+function nav(){function b(k,label,icn){return '<button class="'+(ui.tab===k?'on':'')+'" data-act="tab" data-v="'+k+'" aria-current="'+(ui.tab===k?'page':'false')+'">'+ic(icn,22)+label+'</button>';}
+  return '<nav class="nav" aria-label="Navigasi"><div class="nav-in">'+b('home','Beranda','home')+b('cal','Kalender','cal')+'<button class="fab" data-act="openAdd" aria-label="Tambah hutang">'+ic('plus',26,2.5)+'</button>'+b('strat','Strategi','chart')+b('more','Lainnya','more')+'</div></nav>';}
+
+/* ---------- detail ---------- */
+function vDetail(){var d=findDebt(ui.detail);if(!d){ui.detail=null;return '';}var st=stats(d);
+  var h='<div class="full" id="sc-detail"><div class="app" style="padding-bottom:40px"><div class="row between" style="margin-bottom:12px"><div class="row" style="min-width:0"><button class="btn-icon" data-act="closeDetail" aria-label="Kembali">'+ic('back',22)+'</button><span class="col" style="min-width:0"><span class="h b" style="font-size:20px">'+esc(d.name)+'</span><span class="mu small">'+esc(d.type)+' · '+d.inst.length+' tenor</span></span></div><button class="btn-icon" data-act="openEdit" data-id="'+d.id+'" aria-label="Edit hutang">'+ic('edit',18)+'</button></div>';
+  h+='<div class="card stack" style="border-radius:20px"><div class="row between" style="align-items:flex-end"><span class="col" style="gap:4px"><span class="mu" style="font-size:13px">Sisa outstanding</span><span class="h b" style="font-size:30px;line-height:1">'+rp(st.sisa)+'</span></span><span class="b" style="color:var(--ok)">'+st.cnt+'/'+st.n+' lunas</span></div><div class="bar" style="height:10px"><i style="width:'+st.pctPaid.toFixed(1)+'%"></i></div><div class="grid2" style="gap:10px 12px;font-size:12px"><span class="col" style="gap:2px"><span class="mu">Pinjaman</span><span class="b" style="font-size:14px">'+rp(d.pinjaman)+'</span></span><span class="col" style="gap:2px"><span class="mu">Total kembali</span><span class="b" style="font-size:14px">'+rp(st.total)+'</span></span><span class="col" style="gap:2px"><span class="mu">Total bunga + biaya ('+pct(st.R.pctPokok)+')</span><span class="b" style="font-size:14px;color:#FF7A6F">'+rp(st.bunga)+'</span></span><span class="col" style="gap:2px"><span class="mu">Jadwal · lama pinjaman</span><span class="b" style="font-size:14px">'+modeLbl(d.mode)+' · '+st.R.days+' hari</span></span>'+(st.sisaPokok!=null?'<span class="col" style="gap:2px"><span class="mu">Sisa pokok</span><span class="b" style="font-size:14px">'+rp(st.sisaPokok)+'</span></span><span class="col" style="gap:2px"><span class="mu">Sisa bunga/biaya</span><span class="b" style="font-size:14px">'+rp(st.sisa-st.sisaPokok)+'</span></span>':'')+''+(d.admin?'<span class="col" style="gap:2px"><span class="mu">Potongan di awal</span><span class="b" style="font-size:14px">'+rp(d.admin)+'</span></span><span class="col" style="gap:2px"><span class="mu">Dana diterima</span><span class="b" style="font-size:14px">'+rp(d.pinjaman-d.admin)+'</span></span>':'')+'<span class="col" style="gap:2px"><span class="mu">Sudah dibayar</span><span class="b" style="font-size:14px">'+rp(st.paid)+'</span></span><span class="col" style="gap:2px"><span class="mu">Bunga terbayar</span><span class="b" style="font-size:14px">'+rp(st.bungaPaid)+'</span></span></div><div style="border-top:1px solid var(--line);padding-top:12px" class="stack">'+ratesHTML(st.R,d.mode!=='bulanan')+'</div>'+(d.payoff?'<span class="small" style="color:#6EDBCD">Dilunasi dipercepat '+fmtD(d.payoff.date)+' sebesar '+rp(d.payoff.amount)+(d.payoff.saved>0?' · hemat '+rp(d.payoff.saved):'')+'</span>':'')+'</div>';
+  if(!st.done)h+='<button class="btn btn-g" style="width:100%;margin-top:12px" data-act="openPayoff" data-id="'+d.id+'">'+ic('zap',18)+'Pelunasan dipercepat</button>';
+  h+='<div class="row between" style="margin-top:18px"><span class="sec" style="margin:0">Jadwal tenor</span><span class="mu small">Kotak = tandai lunas</span></div><div class="card" style="margin-top:10px;padding:2px 8px 2px 4px">';
+  d.inst.forEach(function(i){var s=instStatus(i);h+='<div class="irow"><button class="ck '+(i.paidAt?'on':'')+'" data-act="toggleInst" data-id="'+d.id+'" data-n="'+i.n+'" aria-pressed="'+(!!i.paidAt)+'" aria-label="Tandai tenor '+i.n+' lunas"><span>'+(i.paidAt?ic('check',14,3):'')+'</span></button><button class="body" data-act="openInst" data-id="'+d.id+'" data-n="'+i.n+'"><span class="col" style="gap:2px"><span class="b" style="font-size:14px">Tenor '+i.n+'</span><span class="mu small">'+fmtD(i.due)+'</span></span><span class="col" style="gap:4px;align-items:flex-end"><span class="b" style="font-size:14px">'+rp(i.paidAt?i.paidAmount:i.amount)+'</span>'+chip(s)+'</span></button></div>';});
+  h+='</div><button class="btn btn-d" style="width:100%;margin-top:18px" data-act="askDelete" data-id="'+d.id+'">'+ic('trash',18)+'Hapus hutang ini</button></div></div>';return h;}
+
+/* ---------- form ---------- */
+function newRow(f){var rs=f.rows,last=rs[rs.length-1];if(!last)return {due:addMonths(f.cair||todayISO(),1),pokok:0,bunga:0};var due;if(rs.length>=2){var gap=daysBetween(rs[rs.length-2].due,last.due);due=(gap>=27&&gap<=31)?addMonths(last.due,1):addDays(last.due,Math.max(1,gap));}else due=addMonths(last.due,1);return {due:due,pokok:last.pokok,bunga:last.bunga};}
+function rowsFromInst(d){var tot=0;d.inst.forEach(function(i){tot+=i.amount;});return d.inst.map(function(i){var pk=i.pokok!=null?i.pokok:Math.round(i.amount*(d.pinjaman/(tot||1)));return {due:i.due,pokok:pk,bunga:i.amount-pk};});}
+function openForm(d){
+  if(d)ui.form={mode:'edit',id:d.id,type:d.type,name:d.name,pinjaman:d.pinjaman,admin:d.admin||0,kembali:d.kembali,tenor:d.inst.length,sched:d.mode||'bulanan',firstDue:d.firstDue,cair:d.cair||todayISO(),hari:d.hari||d.inst.length*30,rows:rowsFromInst(d),paidCount:0,err:''};
+  else{var t=types()[0];ui.form={mode:'add',type:t.name,name:'',pinjaman:0,admin:0,kembali:0,tenor:t.mode==='harian'?3:12,sched:t.mode,firstDue:addMonths(todayISO(),1),cair:todayISO(),hari:90,rows:[],paidCount:0,err:''};}
+  if(ui.form.sched==='manual'&&!ui.form.rows.length)ui.form.rows.push(newRow(ui.form));
+  render();var el=document.getElementById('sc-form');if(el)el.scrollTop=0;}
+function sortedRows(){return ui.form.rows.slice().sort(function(a,b){return a.due<b.due?-1:a.due>b.due?1:0;});}
+function formSpec(){var f=ui.form;if(f.sched==='manual'){var rs=sortedRows(),k=0;rs.forEach(function(r){k+=r.pokok+r.bunga;});return {mode:'manual',rows:rs,kembali:k,tenor:rs.length,cair:f.cair};}return {kembali:f.kembali,tenor:Math.max(1,f.tenor||1),mode:f.sched,firstDue:f.firstDue,cair:f.cair,hari:f.hari};}
+function isDate(x){return /^\d{4}-\d{2}-\d{2}$/.test(x||'');}
+function formReady(){var f=ui.form;if(f.sched==='manual')return isDate(f.cair)&&f.rows.length>0&&f.rows.every(function(r){return isDate(r.due)&&(r.pokok+r.bunga)>0;});if(!f.kembali||!f.tenor)return false;if(f.sched==='harian')return isDate(f.cair)&&f.hari>0;return isDate(f.firstDue);}
+function manualSumHTML(){var f=ui.form,pk=0,bg=0;f.rows.forEach(function(r){pk+=r.pokok;bg+=r.bunga;});var diff=pk-f.pinjaman;
+  return '<div class="card" style="background:#0C0E10;padding:12px 14px;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;font-size:12px"><span class="col" style="gap:2px"><span class="mu">Total pokok</span><span class="b" style="font-size:14px;color:'+(f.pinjaman&&diff!==0?'#FF7A6F':'var(--tx)')+'">'+rp(pk)+'</span></span><span class="col" style="gap:2px"><span class="mu">Total bunga/biaya</span><span class="b" style="font-size:14px">'+rp(bg)+'</span></span><span class="col" style="gap:2px"><span class="mu">Total kembali</span><span class="b" style="font-size:14px">'+rp(pk+bg)+'</span></span></div>'+(f.pinjaman&&diff!==0?'<div class="err">Total pokok di jadwal '+(diff>0?'lebih':'kurang')+' '+rp(Math.abs(diff))+' dari pokok pinjaman.</div>':'');}
+function formCalcHTML(){var f=ui.form,sp=formSpec(),p=f.pinjaman,k=sp.kembali,t=sp.tenor;var bad=k&&p&&k<p;
+  var head='<div class="grid2" style="gap:10px 12px;font-size:12px"><span class="col" style="gap:2px"><span class="mu">'+(f.sched==='manual'?'Jumlah cicilan':'Cicilan per tenor')+'</span><span class="b" style="font-size:15px">'+(f.sched==='manual'?t+'x':(t&&k?rp(Math.floor(k/t)):'—'))+'</span><span class="mu" style="font-size:11px">'+(f.sched==='harian'&&t&&f.hari?'tiap ±'+Math.round(f.hari/t)+' hari':f.sched==='manual'?'nominal sesuai jadwal':'tiap bulan')+'</span></span>';
+  if(!p||!k||bad||!formReady())return '<div class="card stack" style="background:#0C0E10;padding:14px">'+head+'<span class="col" style="gap:2px"><span class="mu">Total bunga + biaya</span><span class="b" style="font-size:15px">—</span></span></div>'+(bad?'<div class="err">Total pengembalian lebih kecil dari pokok.</div>':'<span class="mu small">Lengkapi pokok, jadwal, dan tanggal untuk lihat bunganya.</span>')+'</div>';
+  var dd=dueDates(sp),flows;if(f.sched==='manual')flows=sp.rows.map(function(r){return {due:r.due,amt:r.pokok+r.bunga};});else{var per=Math.floor(k/t);flows=dd.map(function(due,i){return {due:due,amt:i===t-1?k-per*(t-1):per};});}
+  var cair=f.sched==='bulanan'?addMonths(f.firstDue,-1):f.cair;
+  var R=calcRates({pinjaman:p,admin:f.admin,cair:cair,mode:f.sched,tenor:t,ojk:typeOf(f.type).ojk,flows:flows});
+  return '<div class="card stack" style="background:#0C0E10;padding:14px">'+head+'<span class="col" style="gap:2px"><span class="mu">Total bunga + biaya</span><span class="b" style="font-size:15px;color:#FF7A6F">'+rp(R.biaya)+'</span><span class="mu" style="font-size:11px">'+pct(R.pctPokok)+' dari pokok · '+R.days+' hari</span></span></div><div style="border-top:1px solid var(--line);padding-top:10px" class="stack">'+ratesHTML(R,f.sched!=='bulanan')+'</div><span class="mu" style="font-size:11px;line-height:1.5">Flat = total biaya ÷ pokok ÷ jumlah hari (cara OJK menghitung batas). Efektif = bunga riil dari dana yang benar-benar lo terima dan jadwal bayarnya.</span></div>';}
+function schedHTML(){var f=ui.form;if(f.sched==='manual')return '';if(!formReady())return '<div class="card mu" style="font-size:13px">Lengkapi total pengembalian, tenor, dan tanggal untuk melihat jadwal.</div>';
+  var prev=null;if(f.mode==='edit'){var d=findDebt(f.id);prev=d&&d.inst;}var rows=buildInst(formSpec(),prev,f.mode==='add'?Math.min(f.paidCount,f.tenor):0);
+  var show=rows.length<=8?rows:rows.slice(0,4).concat([null]).concat(rows.slice(-2));
+  return '<div class="card" style="padding:12px 16px"><div class="row between" style="margin-bottom:6px"><span class="b" style="font-size:14px">Jadwal tenor ('+modeLbl(f.sched).toLowerCase()+')</span><span class="mu small">edit per tenor nanti di detail</span></div>'+show.map(function(r){if(!r)return '<div class="sched mu"><span>…</span><span>'+(rows.length-6)+' tenor lagi</span><span></span></div>';return '<div class="sched"><span class="mu" style="width:70px">Tenor '+r.n+'</span><span style="flex:1">'+fmtD(r.due)+'</span><span class="b">'+rp(r.amount)+(r.paidAt?' <span style="color:var(--ok)">✓</span>':'')+'</span></div>';}).join('')+'</div>';}
+function rowsHTML(){var f=ui.form;return f.rows.map(function(r,ix){return '<div class="card stack" style="padding:12px 14px;gap:10px"><div class="row between"><span class="b" style="font-size:14px">Cicilan '+(ix+1)+'</span><span class="row" style="gap:6px"><span class="mu small" id="rt-'+ix+'">'+rp(r.pokok+r.bunga)+'</span>'+(f.rows.length>1?'<button class="btn-icon" style="width:40px;height:40px" data-act="rowDel" data-v="'+ix+'" aria-label="Hapus cicilan '+(ix+1)+'">'+ic('trash',16)+'</button>':'')+'</span></div><label class="f" style="font-size:12px">Jatuh tempo<input type="date" data-r="'+ix+'" data-k="due" value="'+r.due+'"></label><div class="grid2"><label class="f" style="font-size:12px">Pokok<input data-r="'+ix+'" data-k="pokok" data-money inputmode="numeric" value="'+fmtNum(r.pokok)+'" placeholder="Rp"></label><label class="f" style="font-size:12px">Bunga + biaya<input data-r="'+ix+'" data-k="bunga" data-money inputmode="numeric" value="'+fmtNum(r.bunga)+'" placeholder="Rp"></label></div></div>';}).join('');}
+function vForm(){var f=ui.form,h='<div class="full" id="sc-form"><div class="app" style="padding-bottom:40px"><div class="row" style="margin-bottom:14px"><button class="btn-icon" data-act="closeForm" aria-label="Tutup">'+ic('back',22)+'</button><span class="h b" style="font-size:20px">'+(f.mode==='add'?'Tambah hutang':'Edit hutang')+'</span></div><div class="stack">';
+  h+='<div class="col" style="gap:8px"><span style="font-size:13px;font-weight:600">Jenis hutang</span><div class="row" style="flex-wrap:wrap;gap:8px">'+types().map(function(t){return '<button class="typechip '+(f.type===t.name?'on':'')+'" data-act="fType" data-v="'+esc(t.name)+'" aria-pressed="'+(f.type===t.name)+'"><span class="sw" style="background:'+t.color+';margin-right:6px;border-radius:5px"></span>'+esc(t.name)+'</button>';}).join('')+'<button class="typechip" data-act="openNewType" aria-label="Tambah jenis hutang" style="width:44px;padding:0;display:inline-flex;align-items:center;justify-content:center">'+ic('plus',18,2.5)+'</button></div></div>';
+  h+='<label class="f">Nama / pemberi pinjaman<input data-f="name" value="'+esc(f.name)+'" placeholder="mis. CC Platinum, Pinjol X" maxlength="40" autocomplete="off"></label>';
+  h+='<div class="grid2"><label class="f">Pokok pinjaman<input data-f="pinjaman" data-money inputmode="numeric" value="'+fmtNum(f.pinjaman)+'" placeholder="Rp"></label>'+(f.sched==='manual'?'<label class="f">Tanggal dana cair<input type="date" data-f="cair" value="'+f.cair+'"></label>':'<label class="f">Total pengembalian<input data-f="kembali" data-money inputmode="numeric" value="'+fmtNum(f.kembali)+'" placeholder="Rp"></label>')+'</div>';
+  h+='<label class="f">Potongan di awal (admin, asuransi) <span class="mu" style="font-weight:500">— opsional</span><input data-f="admin" data-money inputmode="numeric" value="'+fmtNum(f.admin)+'" placeholder="Rp 0 · dana cair = pokok − potongan"></label>';
+  h+='<div class="col" style="gap:8px"><span style="font-size:13px;font-weight:600">Jadwal cicilan</span><div class="seg" style="grid-template-columns:1fr 1fr 1fr">'+['bulanan','harian','manual'].map(function(m){return '<button class="'+(f.sched===m?'on':'')+'" data-act="fSched" data-v="'+m+'" aria-pressed="'+(f.sched===m)+'">'+(m==='bulanan'?'Tiap bulan':m==='harian'?'Per hari':'Manual')+'</button>';}).join('')+'</div><span class="mu small" style="line-height:1.5">'+(f.sched==='bulanan'?'Cicilan sama rata, tanggal sama tiap bulan. Cocok untuk kartu kredit, KTA, paylater.':f.sched==='harian'?'Cicilan sama rata, jarak dihitung dari total hari ÷ jumlah cicilan.':'Isi tiap cicilan persis seperti rincian tagihan di aplikasi. Cocok untuk pinjol dengan cicilan tidak rata atau pokok di depan.')+'</span></div>';
+  var step='<div class="col" style="gap:6px"><span style="font-size:13px;font-weight:600">Jumlah cicilan</span><div class="stepper"><button data-act="fStep" data-f="tenor" data-d="-1" aria-label="Kurangi tenor">−</button><input data-f="tenor" inputmode="numeric" value="'+f.tenor+'" aria-label="Jumlah cicilan"><button data-act="fStep" data-f="tenor" data-d="1" aria-label="Tambah tenor">+</button></div></div>';
+  if(f.sched==='harian')h+='<div class="grid2">'+step+'<label class="f">Lama pinjaman (hari)<input data-f="hari" inputmode="numeric" value="'+(f.hari||'')+'" placeholder="mis. 150"></label></div><label class="f">Tanggal dana cair<input type="date" data-f="cair" value="'+f.cair+'"></label>';
+  else if(f.sched==='bulanan')h+='<div class="grid2">'+step+'<label class="f">Jatuh tempo cicilan 1<input type="date" data-f="firstDue" value="'+f.firstDue+'"></label></div>';
+  else h+='<div class="col" style="gap:10px" id="frows">'+rowsHTML()+'</div><button class="btn btn-g" data-act="rowAdd">'+ic('plus',18)+'Tambah cicilan</button><span class="mu small" style="line-height:1.5">Cicilan baru otomatis mengikuti jarak tanggal dan nominal cicilan sebelumnya. Tinggal koreksi yang beda.</span><div id="fmsum">'+manualSumHTML()+'</div>';
+  h+='<div id="fcalc">'+formCalcHTML()+'</div>';
+  if(f.mode==='add')h+='<div class="col" style="gap:6px"><span style="font-size:13px;font-weight:600">Sudah dibayar berapa cicilan?</span><div class="stepper" style="max-width:200px"><button data-act="fStep" data-f="paidCount" data-d="-1" aria-label="Kurangi">−</button><input data-f="paidCount" inputmode="numeric" value="'+f.paidCount+'" aria-label="Cicilan yang sudah dibayar"><button data-act="fStep" data-f="paidCount" data-d="1" aria-label="Tambah">+</button></div><span class="mu small">Untuk hutang yang sudah berjalan: cicilan awal otomatis ditandai lunas.</span></div>';
+  else h+='<span class="mu small" style="line-height:1.5">Mengubah jadwal akan menyusun ulang cicilan. Status lunas tetap mengikuti urutan cicilan.</span>';
+  h+='<div id="fsched">'+schedHTML()+'</div><div class="err" id="ferr">'+esc(f.err||'')+'</div><button class="btn btn-p" data-act="saveForm">'+(f.mode==='add'?'Simpan hutang':'Simpan perubahan')+'</button></div></div></div>';return h;}
+function refreshForm(){var a=document.getElementById('fcalc'),b=document.getElementById('fsched'),c=document.getElementById('fmsum');if(a)a.innerHTML=formCalcHTML();if(b)b.innerHTML=schedHTML();if(c)c.innerHTML=manualSumHTML();}
+function saveForm(){var f=ui.form,err='',man=f.sched==='manual';
+  if(man){var pk=0;f.rows.forEach(function(r){pk+=r.pokok;});}
+  if(!f.name.trim())err='Nama hutang belum diisi.';else if(!f.pinjaman)err='Pokok pinjaman belum diisi.';else if(f.admin>=f.pinjaman)err='Potongan di awal harus lebih kecil dari pokok.';
+  else if(man){if(!isDate(f.cair))err='Tanggal dana cair belum diisi.';else if(!f.rows.length)err='Tambahkan minimal satu cicilan.';else if(!f.rows.every(function(r){return isDate(r.due)&&(r.pokok+r.bunga)>0;}))err='Setiap cicilan butuh tanggal dan nominal.';else if(pk!==f.pinjaman)err='Total pokok di jadwal ('+rp(pk)+') harus sama dengan pokok pinjaman ('+rp(f.pinjaman)+').';else if(f.rows.length>120)err='Maksimal 120 cicilan.';}
+  else if(!f.kembali)err='Total pengembalian belum diisi.';else if(f.kembali<f.pinjaman)err='Total pengembalian tidak boleh lebih kecil dari pokok.';else if(!f.tenor||f.tenor<1||f.tenor>120)err='Jumlah cicilan harus 1 sampai 120.';else if(f.sched==='harian'&&(!f.hari||f.hari<f.tenor))err='Lama pinjaman (hari) belum diisi atau kurang dari jumlah cicilan.';else if(!formReady())err='Tanggal belum diisi.';
+  if(err){f.err=err;var e=document.getElementById('ferr');if(e)e.textContent=err;return;}
+  var before=clone(state),sp=formSpec();
+  function fields(d){d.name=f.name.trim();d.type=f.type;d.pinjaman=f.pinjaman;d.admin=f.admin||0;d.kembali=sp.kembali;d.tenor=sp.tenor;d.mode=f.sched;d.hari=f.sched==='harian'?f.hari:null;d.cair=f.sched==='bulanan'?addMonths(f.firstDue,-1):f.cair;d.firstDue=d.inst[0].due;}
+  if(f.mode==='add'){var d={id:newId(),createdAt:Date.now(),inst:buildInst(sp,null,Math.min(f.paidCount,sp.tenor))};fields(d);state.debts.push(d);ui.form=null;ui.tab='home';commit('Hutang ditambahkan',before);}
+  else{var d2=findDebt(f.id);if(!d2){ui.form=null;render();return;}var structural=man||d2.kembali!==f.kembali||d2.tenor!==f.tenor||(d2.mode||'bulanan')!==f.sched||(f.sched==='harian'?(d2.cair!==f.cair||d2.hari!==f.hari):d2.firstDue!==f.firstDue);if(structural){d2.inst=buildInst(sp,d2.inst,0);d2.payoff=null;}fields(d2);ui.form=null;commit('Perubahan disimpan',before);}}
+
+/* ---------- sheets ---------- */
+function vSheet(){var s=ui.sheet;if(!s)return '';var body='';
+  if(s.kind==='inst'){var d=findDebt(s.id),i=d&&d.inst[s.n-1];if(!i){ui.sheet=null;return '';}
+    body='<div class="row between"><span class="col"><span class="h b" style="font-size:19px">'+esc(d.name)+' · tenor '+i.n+'</span><span class="mu small">'+chip(instStatus(i))+'</span></span><button class="btn-icon" data-act="closeSheet" aria-label="Tutup">'+ic('x',18)+'</button></div>'+
+    '<div class="grid2"><label class="f">Jatuh tempo<input type="date" id="si-due" value="'+i.due+'"></label><label class="f">Nominal tagihan<input id="si-amt" data-money inputmode="numeric" value="'+fmtNum(i.amount)+'"></label></div>'+
+    '<div class="grid2"><label class="f">Tanggal bayar<input type="date" id="si-pdate" value="'+(i.paidAt||todayISO())+'"></label><label class="f">Nominal dibayar<input id="si-pamt" data-money inputmode="numeric" value="'+fmtNum(i.paidAt?i.paidAmount:i.amount)+'"></label></div>'+
+    '<span class="mu small" style="line-height:1.5">Kalau nominal dibayar lebih besar dari tagihan (misal kena denda telat), selisihnya tercatat sebagai denda/biaya tambahan.</span><div class="err" id="si-err"></div>'+
+    (i.paidAt?'<div class="grid2"><button class="btn btn-g" data-act="instUnpay">Batalkan lunas</button><button class="btn btn-p" data-act="instSave">Simpan</button></div>':'<div class="grid2"><button class="btn btn-g" data-act="instSave">Simpan jadwal</button><button class="btn btn-p" data-act="instPay">'+ic('check',18,2.5)+'Tandai lunas</button></div>')+'<button class="btn btn-g" data-act="openDebtFromSheet" data-id="'+d.id+'">Lihat semua tenor</button>';}
+  else if(s.kind==='payoff'){var d3=findDebt(s.id),st=stats(d3);body='<div class="row between"><span class="h b" style="font-size:19px">Pelunasan dipercepat</span><button class="btn-icon" data-act="closeSheet" aria-label="Tutup">'+ic('x',18)+'</button></div><span class="mu" style="font-size:14px;line-height:1.5">'+esc(d3.name)+': sisa '+(st.n-st.cnt)+' tenor, total '+rp(st.sisa)+(st.sisaPokok!=null?' (sisa pokok '+rp(st.sisaPokok)+')':'')+'. Masukkan nominal pelunasan dari pemberi pinjaman. Pinjol biasanya menagih sisa pokok + bunga berjalan.</span><div class="grid2"><label class="f">Nominal pelunasan<input id="sp-amt" data-money inputmode="numeric" value="'+fmtNum(st.sisaPokok!=null?st.sisaPokok:st.sisa)+'"></label><label class="f">Tanggal<input type="date" id="sp-date" value="'+todayISO()+'"></label></div><div id="sp-save" class="small" style="color:#6EDBCD"></div><div class="err" id="sp-err"></div><button class="btn btn-p" data-act="doPayoff">Lunasi semua sisa tenor</button>';}
+  else if(s.kind==='newType'){body='<div class="row between"><span class="h b" style="font-size:19px">Jenis hutang baru</span><button class="btn-icon" data-act="closeSheet" aria-label="Tutup">'+ic('x',18)+'</button></div>'+
+    '<label class="f">Nama jenis<input id="nt-name" value="'+esc(s.name)+'" placeholder="mis. Cicilan motor, Gadai, Pinjaman teman" maxlength="24" autocomplete="off"></label>'+
+    '<div class="col" style="gap:8px"><span style="font-size:13px;font-weight:600">Warna</span><div class="row" style="flex-wrap:wrap;gap:8px">'+SWATCH.map(function(c){return '<button data-act="ntColor" data-v="'+c+'" aria-label="Warna '+c+'" aria-pressed="'+(s.color===c)+'" style="width:44px;height:44px;border-radius:22px;border:0;cursor:pointer;background:'+c+';box-shadow:'+(s.color===c?'0 0 0 3px #101215,0 0 0 5px #F3F1EC':'none')+'"></button>';}).join('')+'</div></div>'+
+    '<div class="col" style="gap:8px"><span style="font-size:13px;font-weight:600">Jadwal cicilan default</span><div class="seg" style="grid-template-columns:1fr 1fr 1fr"><button class="'+(s.mode==='bulanan'?'on':'')+'" data-act="ntMode" data-v="bulanan">Tiap bulan</button><button class="'+(s.mode==='harian'?'on':'')+'" data-act="ntMode" data-v="harian">Per hari</button><button class="'+(s.mode==='manual'?'on':'')+'" data-act="ntMode" data-v="manual">Manual</button></div></div>'+
+    '<label class="row between" style="gap:12px;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:12px 14px;font-size:14px;font-weight:600"><span class="col" style="gap:2px">Fintech / pinjol<span class="mu" style="font-size:12px;font-weight:500">Cek bunga terhadap batas OJK per hari</span></span><input type="checkbox" id="nt-ojk" '+(s.ojk?'checked':'')+' style="width:24px;height:24px;min-height:0;accent-color:#E5372B;flex:none"></label>'+
+    '<div class="err" id="nt-err"></div><button class="btn btn-p" data-act="saveType">Simpan jenis</button>';}
+  else if(s.kind==='confirm'){body='<span class="h b" style="font-size:19px">'+esc(s.title)+'</span><span class="mu" style="font-size:14px;line-height:1.5">'+esc(s.body)+'</span><div class="grid2"><button class="btn btn-g" data-act="closeSheet">Batal</button><button class="btn btn-p" data-act="'+s.act+'" data-id="'+(s.id||'')+'">'+esc(s.ok)+'</button></div>';}
+  else if(s.kind==='export'){body='<div class="row between"><span class="h b" style="font-size:19px">'+esc(s.title)+'</span><button class="btn-icon" data-act="closeSheet" aria-label="Tutup">'+ic('x',18)+'</button></div><textarea id="ex-text" readonly>'+esc(s.text)+'</textarea><div class="grid2"><button class="btn btn-g" data-act="copyExport">Salin</button><button class="btn btn-p" data-act="saveExport" id="ex-dl">Unduh file</button></div><span class="mu small" id="ex-msg"></span>';}
+  else if(s.kind==='import'){body='<div class="row between"><span class="h b" style="font-size:19px">Pulihkan dari backup</span><button class="btn-icon" data-act="closeSheet" aria-label="Tutup">'+ic('x',18)+'</button></div><label class="f">Pilih file backup (.json)<input type="file" id="im-file" accept=".json,application/json" style="padding:10px"></label><label class="f">atau tempel isi backup<textarea id="im-text" placeholder="{&quot;debts&quot;: …}"></textarea></label><span class="mu small">Data sekarang akan diganti dengan isi backup.</span><div class="err" id="im-err"></div><button class="btn btn-p" data-act="doImport">Pulihkan</button>';}
+  return '<div class="sheet-bg" data-act="bgClose"><div class="sheet stack" role="dialog" aria-modal="true">'+body+'</div></div>';}
+
+/* ---------- render ---------- */
+function render(){
+  var keep={};['sc-detail','sc-form'].forEach(function(id){var el=document.getElementById(id);if(el)keep[id]=el.scrollTop;});
+  var v=ui.tab==='cal'?vCal():ui.tab==='strat'?vStrat():ui.tab==='more'?vMore():vHome();
+  document.getElementById('app').innerHTML='<main class="app">'+v+'</main>'+nav();
+  document.getElementById('ov').innerHTML=(ui.detail?vDetail():'')+(ui.form?vForm():'')+vSheet();
+  Object.keys(keep).forEach(function(id){var el=document.getElementById(id);if(el)el.scrollTop=keep[id];});
+  document.body.style.overflow=(ui.detail||ui.form||ui.sheet)?'hidden':'';
+}
+var toastTimer=null;
+function toast(msg,canUndo){var t=document.getElementById('toast');t.innerHTML='<div class="toast" role="status"><span>'+esc(msg)+'</span>'+(canUndo?'<button data-act="undo">Batalkan</button>':'')+'</div>';clearTimeout(toastTimer);toastTimer=setTimeout(function(){t.innerHTML='';},4500);}
+
+/* ---------- actions ---------- */
+function setAmt(i,amt){i.amount=amt;if(i.pokok!=null){if(amt<i.pokok)i.pokok=amt;i.bunga=amt-i.pokok;}}
+function markPaid(d,i,date,amt){i.paidAt=date||todayISO();i.paidAmount=amt==null?i.amount:amt;}
+var A={
+  tab:function(ds){ui.tab=ds.v;ui.selDay=null;render();window.scrollTo(0,0);},
+  openAdd:function(){openForm(null);},
+  openEdit:function(ds){openForm(findDebt(ds.id));},
+  closeForm:function(){ui.form=null;render();},
+  openDebt:function(ds){ui.detail=ds.id;render();var el=document.getElementById('sc-detail');if(el)el.scrollTop=0;},
+  openDebtFromSheet:function(ds){ui.sheet=null;ui.detail=ds.id;render();},
+  closeDetail:function(){ui.detail=null;render();},
+  quickPay:function(ds){var d=findDebt(ds.id),i=d.inst[ds.n-1],before=clone(state);markPaid(d,i);commit(d.name+' tenor '+i.n+' lunas',before);},
+  toggleInst:function(ds){var d=findDebt(ds.id),i=d.inst[ds.n-1],before=clone(state);if(i.paidAt){i.paidAt=null;i.paidAmount=0;commit('Tenor '+i.n+' ditandai belum bayar',before);}else{markPaid(d,i);commit('Tenor '+i.n+' lunas',before);}},
+  openInst:function(ds){ui.sheet={kind:'inst',id:ds.id,n:Number(ds.n)};render();},
+  closeSheet:function(){ui.sheet=null;render();},
+  bgClose:function(ds,el,e){if(e.target===el){ui.sheet=null;render();}},
+  instSave:function(){var s=ui.sheet,d=findDebt(s.id),i=d.inst[s.n-1],before=clone(state);var due=document.getElementById('si-due').value,amt=num(document.getElementById('si-amt').value);if(!due||!amt){document.getElementById('si-err').textContent='Tanggal dan nominal tagihan wajib diisi.';return;}i.due=due;setAmt(i,amt);if(i.paidAt){i.paidAt=document.getElementById('si-pdate').value||i.paidAt;i.paidAmount=num(document.getElementById('si-pamt').value);}ui.sheet=null;commit('Tenor '+i.n+' diperbarui',before);},
+  instPay:function(){var s=ui.sheet,d=findDebt(s.id),i=d.inst[s.n-1],before=clone(state);var due=document.getElementById('si-due').value,amt=num(document.getElementById('si-amt').value),pd=document.getElementById('si-pdate').value,pa=num(document.getElementById('si-pamt').value);if(!due||!amt||!pd||!pa){document.getElementById('si-err').textContent='Lengkapi tanggal dan nominal.';return;}i.due=due;setAmt(i,amt);markPaid(d,i,pd,pa);ui.sheet=null;commit(d.name+' tenor '+i.n+' lunas',before);},
+  instUnpay:function(){var s=ui.sheet,d=findDebt(s.id),i=d.inst[s.n-1],before=clone(state);i.paidAt=null;i.paidAmount=0;ui.sheet=null;commit('Tenor '+i.n+' ditandai belum bayar',before);},
+  openPayoff:function(ds){ui.sheet={kind:'payoff',id:ds.id};render();},
+  doPayoff:function(){var s=ui.sheet,d=findDebt(s.id),st=stats(d),before=clone(state);var amt=num(document.getElementById('sp-amt').value),date=document.getElementById('sp-date').value;if(!amt||!date){document.getElementById('sp-err').textContent='Isi nominal dan tanggal pelunasan.';return;}var open=d.inst.filter(function(i){return !i.paidAt;}),left=amt;open.forEach(function(i,ix){var share=ix===open.length-1?left:Math.round(amt*i.amount/st.sisa);left-=share;markPaid(d,i,date,share);});d.payoff={date:date,amount:amt,saved:st.sisa-amt};ui.sheet=null;commit(d.name+' lunas'+(st.sisa>amt?' · hemat '+rp(st.sisa-amt):''),before);},
+  askDelete:function(ds){var d=findDebt(ds.id);ui.sheet={kind:'confirm',title:'Hapus '+d.name+'?',body:'Semua jadwal dan riwayat pembayaran hutang ini ikut terhapus.',ok:'Hapus',act:'doDelete',id:ds.id};render();},
+  doDelete:function(ds){var before=clone(state);state.debts=state.debts.filter(function(d){return d.id!==ds.id;});ui.sheet=null;ui.detail=null;commit('Hutang dihapus',before);},
+  askReset:function(){ui.sheet={kind:'confirm',title:'Hapus semua data?',body:'Semua hutang, jadwal, riwayat, dan pengaturan akan dihapus. Backup dulu kalau masih perlu.',ok:'Hapus semua',act:'doReset'};render();},
+  doReset:function(){var before=clone(state);state.debts=[];state.settings={};ensureSettings();ui.sheet=null;ui.tab='home';commit('Semua data dihapus',before);},
+  undo:function(){if(!undoSnap)return;state=undoSnap;undoSnap=null;state.updatedAt=Date.now();saveLocal();scheduleCloud();render();document.getElementById('toast').innerHTML='';},
+  calMove:function(ds){var a=ui.calYM.split('-').map(Number),t=new Date(a[0],a[1]-1+Number(ds.v),1);ui.calYM=t.getFullYear()+'-'+pad(t.getMonth()+1);ui.selDay=null;render();},
+  selDay:function(ds){var v=Number(ds.v);ui.selDay=ui.selDay===v?null:v;render();},
+  strat:function(ds){ui.strat=ds.v;render();},
+  fType:function(ds){var f=ui.form;f.type=ds.v;if(f.mode==='add'){var t=typeOf(ds.v);f.sched=t.mode;if(t.mode==='manual'&&!f.rows.length)f.rows.push(newRow(f));}render();},
+  fSched:function(ds){var f=ui.form;f.sched=ds.v;if(ds.v==='manual'&&!f.rows.length)f.rows.push(newRow(f));render();},
+  rowAdd:function(){var f=ui.form;f.rows.push(newRow(f));render();var el=document.getElementById('sc-form');if(el)el.scrollTop=el.scrollTop+180;},
+  rowDel:function(ds){ui.form.rows.splice(Number(ds.v),1);render();},
+  openNewType:function(){ui.sheet={kind:'newType',name:'',color:'#A68BF2',mode:'bulanan',ojk:false};render();var el=document.getElementById('nt-name');if(el)el.focus();},
+  ntColor:function(ds){ui.sheet.color=ds.v;ui.sheet.ojk=document.getElementById('nt-ojk').checked;render();},
+  ntMode:function(ds){ui.sheet.mode=ds.v;ui.sheet.ojk=document.getElementById('nt-ojk').checked;render();},
+  saveType:function(){var s=ui.sheet,name=(document.getElementById('nt-name').value||'').trim(),er=document.getElementById('nt-err');if(!name){er.textContent='Nama jenis belum diisi.';return;}if(types().some(function(t){return t.name.toLowerCase()===name.toLowerCase();})){er.textContent='Jenis ini sudah ada.';return;}var before=clone(state);types().push({name:name,color:s.color,mode:s.mode,ojk:document.getElementById('nt-ojk').checked});ui.sheet=null;if(ui.form){ui.form.type=name;if(ui.form.mode==='add'){ui.form.sched=s.mode;if(s.mode==='manual'&&!ui.form.rows.length)ui.form.rows.push(newRow(ui.form));}}commit('Jenis "'+name+'" ditambahkan',before);},
+  askDelType:function(ds){ui.sheet={kind:'confirm',title:'Hapus jenis '+ds.v+'?',body:'Jenis ini belum dipakai hutang mana pun.',ok:'Hapus',act:'doDelType',id:ds.v};render();},
+  doDelType:function(ds){var before=clone(state);state.settings.types=types().filter(function(t){return t.name!==ds.id;});ui.sheet=null;commit('Jenis dihapus',before);},
+  fStep:function(ds){var f=ui.form,k=ds.f,v=(f[k]||0)+Number(ds.d);if(k==='tenor')v=Math.max(1,Math.min(120,v));else v=Math.max(0,Math.min(f.sched==='manual'?f.rows.length:f.tenor,v));f[k]=v;var el=document.querySelector('#sc-form input[data-f="'+k+'"]');if(el)el.value=v;refreshForm();},
+  saveForm:function(){saveForm();},
+  export:function(ds){if(ds.v==='json')ui.sheet={kind:'export',title:'Backup data',text:JSON.stringify({app:'STOP RIBA',v:1,exportedAt:new Date().toISOString(),debts:state.debts,settings:state.settings},null,1),filename:'stop-riba-backup-'+todayISO()+'.json'};
+    else{var rows=[['Hutang','Jenis','Tenor','Jatuh tempo','Tagihan','Status','Tanggal bayar','Dibayar']];state.debts.forEach(function(d){d.inst.forEach(function(i){rows.push([d.name,d.type,i.n+'/'+d.inst.length,i.due,i.amount,i.paidAt?'Lunas':'Belum',i.paidAt||'',i.paidAt?i.paidAmount:'']);});});ui.sheet={kind:'export',title:'Export CSV',text:rows.map(function(r){return r.map(function(c){c=String(c);return /[",;\n]/.test(c)?'"'+c.replace(/"/g,'""')+'"':c;}).join(',');}).join('\n'),filename:'stop-riba-'+todayISO()+'.csv'};}
+    render();},
+  copyExport:function(){var t=document.getElementById('ex-text'),m=document.getElementById('ex-msg');try{navigator.clipboard.writeText(ui.sheet.text).then(function(){m.textContent='Tersalin.';},function(){t.select();m.textContent='Tidak bisa salin otomatis. Teks sudah diblok, salin manual.';});}catch(e){t.select();m.textContent='Salin manual dari kotak di atas.';}},
+  saveExport:function(){var m=document.getElementById('ex-msg'),s=ui.sheet;var p=(window.claude&&window.claude.use)?window.claude.use('downloads'):Promise.resolve(null);p.then(function(dl){if(!dl){m.textContent='Unduh tidak tersedia di sini. Pakai Salin.';return;}return dl.save({filename:s.filename,data:s.text}).then(function(){m.textContent='File disimpan.';},function(){m.textContent='Unduhan dibatalkan.';});}).catch(function(){m.textContent='Unduh tidak tersedia. Pakai Salin.';});},
+  openImport:function(){ui.sheet={kind:'import'};render();},
+  doImport:function(){var f=document.getElementById('im-file'),t=document.getElementById('im-text').value.trim(),er=document.getElementById('im-err');function apply(txt){try{var o=JSON.parse(txt);if(!o||!Array.isArray(o.debts))throw 0;var ok=o.debts.every(function(d){return d&&d.id&&d.name&&Array.isArray(d.inst);});if(!ok)throw 0;var before=clone(state);state.debts=o.debts;state.settings=o.settings||state.settings;ensureSettings();ui.sheet=null;ui.tab='home';commit('Backup dipulihkan',before);}catch(e){er.textContent='Isi backup tidak valid.';}}
+    if(f.files&&f.files[0]){var r=new FileReader();r.onload=function(){apply(String(r.result));};r.onerror=function(){er.textContent='File tidak bisa dibaca.';};r.readAsText(f.files[0]);}else if(t)apply(t);else er.textContent='Pilih file atau tempel isi backup.';}
+};
+document.addEventListener('click',function(e){var el=e.target.closest('[data-act]');if(!el)return;var a=A[el.dataset.act];if(!a)return;if(el.dataset.act==='bgClose'){a(el.dataset,el,e);return;}e.preventDefault();a(el.dataset,el,e);});
+document.addEventListener('input',function(e){var el=e.target;if(ui.form&&el.dataset&&el.dataset.r!=null){if(el.hasAttribute('data-money'))el.value=fmtNum(num(el.value));var r=ui.form.rows[Number(el.dataset.r)];if(r){r[el.dataset.k]=el.dataset.k==='due'?el.value:num(el.value);var t=document.getElementById('rt-'+el.dataset.r);if(t)t.textContent=rp(r.pokok+r.bunga);}refreshForm();return;}if(el.id==='nt-name'&&ui.sheet)ui.sheet.name=el.value;
+  if(el.hasAttribute&&el.hasAttribute('data-money')){var v=num(el.value);el.value=fmtNum(v);}
+  if(el.id==='sp-amt'&&ui.sheet&&ui.sheet.kind==='payoff'){var st=stats(findDebt(ui.sheet.id)),v2=num(el.value),o=document.getElementById('sp-save');if(o)o.textContent=v2&&v2<st.sisa?'Hemat '+rp(st.sisa-v2)+' dibanding bayar sesuai jadwal.':'';}
+  if(ui.form&&el.dataset&&el.dataset.f&&el.closest('#sc-form')){var k=el.dataset.f;if(el.hasAttribute('data-money'))ui.form[k]=num(el.value);else if(k==='tenor'||k==='paidCount')ui.form[k]=Math.min(120,num(el.value));else if(k==='hari')ui.form[k]=Math.min(3650,num(el.value));else ui.form[k]=el.value;refreshForm();}
+});
+document.addEventListener('change',function(e){var el=e.target;if(el.dataset&&el.dataset.s){var k=el.dataset.s,v=num(el.value);if(k==='batas')v=Math.max(1,Math.min(100,v||30));if(k==='capShort'||k==='capLong'){v=dec(el.value);if(!(v>0&&v<10)){el.value=String(state.settings[k]).replace('.',',');return;}}if(state.settings[k]!==v){state.settings[k]=v;commit('Pengaturan disimpan');}}});
+
+loadLocal();render();initCloud();
+})();
+</script>
+</body>
+</html>
