@@ -1,5 +1,10 @@
 # Changelog
 
+## v0.5 — 2026-11-06
+- Fix: impor backup bisa langsung dari beranda kosong ("Sudah punya backup? Impor file .json") dan dari layar intro ("Sudah punya backup? Pulihkan data").
+- Header di HP layar sempit: label status sinkron disembunyikan supaya ikon gear (Lainnya) tidak terdorong keluar layar.
+- Logo STOP RIBA (bunga dicoret) sebagai ikon Add to Home Screen di iPhone & Android, favicon, dan manifest dengan nama "STOP RIBA".
+
 ## v0.4 — 2026-11-06
 - **Beranda fokus 7 hari ke depan**: ringkasan sisa outstanding & tagihan bulan ini, banner telat, lalu tagihan 7 hari ke depan per tanggal (bisa dibuka-tutup, centang lunas langsung).
 - **Tab baru "Hutang"**: semua hutang digabung per pemberi pinjaman, dengan pencarian, filter jenis & status (telat, 7 hari, perlu dilengkapi, sudah lunas), dan urutan jatuh tempo / sisa terbesar.
