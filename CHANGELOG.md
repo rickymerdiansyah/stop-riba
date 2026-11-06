@@ -1,5 +1,11 @@
 # Changelog
 
+## v0.3 — 2026-11-06
+- **Angsuran per cicilan bisa diedit** di jadwal Tiap bulan dan Per hari. Awalnya dibagi rata dari nominal pengembalian; begitu satu angsuran diubah, nominal pengembalian dan bunga mengikuti total angsuran. Tombol "Bagi rata ulang" untuk kembali ke pembagian rata.
+- Mengubah jumlah cicilan atau tanggal tidak menghapus angsuran yang sudah diedit.
+- **Jadwal Manual jadi satu kolom "Angsuran"** per cicilan (tanpa pecahan pokok dan bunga). Bunga dan nominal pengembalian dihitung otomatis dari total angsuran.
+- Validasi baru: cicilan tidak boleh jatuh tempo sebelum tanggal dana cair atau lewat due date pengembalian.
+
 ## v0.2 — 2026-11-06
 Menerapkan mockup final.
 - **Intro pertama buka** (2 layar): penjelasan singkat + isi penghasilan dan batas aman cicilan (30/35/40%). Bisa dilewati.
