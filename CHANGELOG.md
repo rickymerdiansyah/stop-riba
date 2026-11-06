@@ -1,5 +1,12 @@
 # Changelog
 
+## v0.4 — 2026-11-06
+- **Beranda fokus 7 hari ke depan**: ringkasan sisa outstanding & tagihan bulan ini, banner telat, lalu tagihan 7 hari ke depan per tanggal (bisa dibuka-tutup, centang lunas langsung).
+- **Tab baru "Hutang"**: semua hutang digabung per pemberi pinjaman, dengan pencarian, filter jenis & status (telat, 7 hari, perlu dilengkapi, sudah lunas), dan urutan jatuh tempo / sisa terbesar.
+- Navigasi: Beranda · Hutang · + · Kalender · Strategi. Menu Lainnya pindah ke ikon gear di kanan atas.
+- Penanda untuk data migrasi dari reminder Telegram: "Perlu dilengkapi" dan "Sebagian cicilan diperkirakan". Hilang otomatis setelah hutang diedit dan disimpan.
+- Fix: tanggal bebas hutang di Strategi sekarang memakai tenor terakhir yang benar.
+
 ## v0.3 — 2026-11-06
 - **Angsuran per cicilan bisa diedit** di jadwal Tiap bulan dan Per hari. Awalnya dibagi rata dari nominal pengembalian; begitu satu angsuran diubah, nominal pengembalian dan bunga mengikuti total angsuran. Tombol "Bagi rata ulang" untuk kembali ke pembagian rata.
 - Mengubah jumlah cicilan atau tanggal tidak menghapus angsuran yang sudah diedit.
