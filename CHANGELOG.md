@@ -1,5 +1,15 @@
 # Changelog
 
+## v0.8 — 2026-11-07
+- **Model denda**: % per hari, % per bulan, atau nominal tetap, plus batas maksimal. Kartu kredit otomatis ikut aturan BI (maks 1% tagihan, maks Rp100.000). Perkiraan denda tampil di banner telat dan detail hutang.
+- **Pelunasan dipercepat**: isian penalti %. Untuk bunga anuitas ada pelunasan sebagian dengan pilihan angsuran turun atau tenor lebih pendek, lengkap dengan perkiraan hemat bunga.
+- **Paylater per akun**: banyak transaksi (30 hari / cicilan 3–12 bulan + biaya %/bulan) digabung jadi satu tagihan per bulan, dengan limit terpakai dan daftar transaksi.
+
+## v0.7 — 2026-11-07
+- **KPR / KKB**: maksimal 360 cicilan. Cara hitung bunga: isi total bunga, flat % per tahun, atau anuitas % per tahun dengan masa fixed lalu floating.
+- **Bunga berubah (floating)**: hitung ulang angsuran dari sisa pokok mulai cicilan tertentu.
+- Sisa pokok tampil di detail dan tiap cicilan. Jenis KPR & KKB ditambahkan ke daftar jenis bawaan.
+
 ## v0.6 — 2026-11-07
 - **Kartu kredit dicatat per lembar tagihan**: form khusus kartu (nama, limit opsional, tanggal cetak & jatuh tempo tiap bulan, bunga per bulan default 1,75%, minimum 5%) plus lembar tagihan pertama.
 - **Bayar tagihan**: pilih Bayar penuh, Bayar minimum, atau Nominal lain. Langsung terlihat sisa yang dibawa ke bulan depan, perkiraan bunga, dan perkiraan tagihan berikutnya. Bayar minimum = status "Dibayar sebagian", bukan lunas.
