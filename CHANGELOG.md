@@ -1,5 +1,13 @@
 # Changelog
 
+## v0.6 — 2026-11-07
+- **Kartu kredit dicatat per lembar tagihan**: form khusus kartu (nama, limit opsional, tanggal cetak & jatuh tempo tiap bulan, bunga per bulan default 1,75%, minimum 5%) plus lembar tagihan pertama.
+- **Bayar tagihan**: pilih Bayar penuh, Bayar minimum, atau Nominal lain. Langsung terlihat sisa yang dibawa ke bulan depan, perkiraan bunga, dan perkiraan tagihan berikutnya. Bayar minimum = status "Dibayar sebagian", bukan lunas.
+- **Tagihan berikutnya (perkiraan)** muncul otomatis setelah bayar sebagian; catat lembar tagihan baru dengan sisa & bunga terisi otomatis, tinggal isi belanja baru.
+- Peringatan "bayar minimum terus": perkiraan lama lunas dan total bunga.
+- Detail kartu: sisa tagihan, pemakaian limit, riwayat tagihan per bulan.
+- Data kartu kredit lama (1 cicilan) otomatis dikonversi ke format lembar tagihan.
+
 ## v0.5 — 2026-11-06
 - Fix: impor backup bisa langsung dari beranda kosong ("Sudah punya backup? Impor file .json") dan dari layar intro ("Sudah punya backup? Pulihkan data").
 - Header di HP layar sempit: label status sinkron disembunyikan supaya ikon gear (Lainnya) tidak terdorong keluar layar.
